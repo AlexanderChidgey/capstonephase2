@@ -358,6 +358,10 @@ void RegisterAllStrippedInternalCalls()
 		void Register_UnityEngine_Application_get_targetFrameRate();
 		Register_UnityEngine_Application_get_targetFrameRate();
 
+		//System.String UnityEngine.Application::get_streamingAssetsPath()
+		void Register_UnityEngine_Application_get_streamingAssetsPath();
+		Register_UnityEngine_Application_get_streamingAssetsPath();
+
 		//System.Void UnityEngine.Application::OpenURL(System.String)
 		void Register_UnityEngine_Application_OpenURL();
 		Register_UnityEngine_Application_OpenURL();

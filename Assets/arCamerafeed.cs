@@ -25,7 +25,7 @@ public class CaptureAndRunYOLO : MonoBehaviour
 
     private const int imageWidth = 640;
     private const int imageHeight = 640;
-    private const float confThreshold = 0.75f;
+    private const float confThreshold = 0.70f;
     private const float iouThreshold = 0.45f;
 
     IEnumerator Start()
@@ -157,13 +157,13 @@ public class CaptureAndRunYOLO : MonoBehaviour
 
             foreach (var det in finalDetections)
             {
-                detectionHandler?.HandleDetection(det.classId);
 
 
                 float latitude = Input.location.lastData.latitude;
                 float longitude = Input.location.lastData.longitude;
                 float heading = Input.compass.trueHeading;
 
+                detectionHandler?.HandleDetection(det.classId, latitude, longitude, heading);
 
                 Debug.Log($"Detected: {det.classId} | Lat: {latitude}, Lon: {longitude} | Heading: {heading}° | Score: {det.score} | Box: [{det.x}, {det.y}, {det.w}, {det.h}]");
 

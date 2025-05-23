@@ -795,9 +795,9 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* latesttest.app */,
 				5623C57317FDCB0800090B9E /* Unity-iPhone Tests.xctest */,
 				9D25AB9D213FB47800354C27 /* UnityFramework.framework */,
+				1D6058910D05DD3D006BFB54 /* latesttest.app */,
 				7F4E05A02717216D00A2CBE4 /* libGameAssembly.a */,
 			);
 			name = Products;

@@ -420,6 +420,8 @@ struct WhereSelectListIterator_2_t790861F5F09573754B5896F56438F0F3C698BDF1;
 struct WhereSelectListIterator_2_tC338D866538F514B4418F7B023D7DDB775934495;
 struct WhereSelectListIterator_2_tF71E1F9B95BFC49AF503361788EDFACF9D6F666B;
 struct WhereSelectListIterator_2_t995F8BF5AD15072049139C2926DDE2D33B6DD3DA;
+struct Wrapper_1_t20340350F59BF5680457D8BFACCC1F514DBAE2C4;
+struct Wrapper_1_tBA235AC1AB36E7E3E2A54CA02C604B96C320AF88;
 struct WriteDelegate_t6A0EB21668C92D873ACB875924DE54518D8B7234;
 struct WriteDelegate_t737D0DA8D96562AD76BB67D9C5A5199EDB0171E1;
 struct WriteDelegate_t907C2DAF3A619B832C6D9441AF1C4CDA7914AF1D;
@@ -603,6 +605,14 @@ struct List_1_t9F88320EFB350BE4828A3B8FCEA1BAA160B4430F  : public RuntimeObject
 	int32_t ____size;
 	int32_t ____version;
 	RuntimeObject* ____syncRoot;
+};
+struct Wrapper_1_t20340350F59BF5680457D8BFACCC1F514DBAE2C4  : public RuntimeObject
+{
+	List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* ___Items;
+};
+struct Wrapper_1_tBA235AC1AB36E7E3E2A54CA02C604B96C320AF88  : public RuntimeObject
+{
+	List_1_tDBA89B0E21BAC58CFBD3C1F76E4668E3B562761A* ___Items;
 };
 struct String_t  : public RuntimeObject
 {
@@ -5157,6 +5167,7 @@ inline void WorkSlice_1_Sort_m7EF532E936D55845DAAC606C0A214FE48EBF8584 (WorkSlic
 {
 	((  void (*) (WorkSlice_1_t667B566D7F9D6CCD86634FB4157540E5A9C14E87*, Func_3_t3E644C82345CE04737DA5CDE018481FE0A88F821*, const RuntimeMethod*))WorkSlice_1_Sort_m7EF532E936D55845DAAC606C0A214FE48EBF8584_gshared)(__this, ___0_compare, method);
 }
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2 (RuntimeObject* __this, const RuntimeMethod* method) ;
 inline bool XRInputDeviceValueReader_1_RefreshInputDeviceIfNeeded_mF312ADF2A82FB90388D4DCB94C6AC2B3444D7C81 (XRInputDeviceValueReader_1_t0ED6AE29E22B31E0EE62B83D4324BDE4D1436506* __this, const RuntimeMethod* method)
 {
 	return ((  bool (*) (XRInputDeviceValueReader_1_t0ED6AE29E22B31E0EE62B83D4324BDE4D1436506*, const RuntimeMethod*))XRInputDeviceValueReader_1_RefreshInputDeviceIfNeeded_mF312ADF2A82FB90388D4DCB94C6AC2B3444D7C81_gshared)(__this, method);
@@ -25875,6 +25886,36 @@ IL2CPP_EXTERN_C  void WorkSlice_1_Sort_m7EF532E936D55845DAAC606C0A214FE48EBF8584
 	int32_t _offset = 1;
 	_thisAdjusted = reinterpret_cast<WorkSlice_1_t667B566D7F9D6CCD86634FB4157540E5A9C14E87*>(__this + _offset);
 	WorkSlice_1_Sort_m7EF532E936D55845DAAC606C0A214FE48EBF8584(_thisAdjusted, ___0_compare, method);
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Wrapper_1__ctor_m99C8CF0674057A310B2C53C7033B0DF773F1A5CD_gshared (Wrapper_1_t20340350F59BF5680457D8BFACCC1F514DBAE2C4* __this, const RuntimeMethod* method) 
+{
+	{
+		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2((RuntimeObject*)__this, NULL);
+		return;
+	}
+}
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winvalid-offsetof"
+#pragma clang diagnostic ignored "-Wunused-variable"
+#endif
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Wrapper_1__ctor_m9A5205C5C61330FF4C5912763B9AFAEE0A72E1D9_gshared (Wrapper_1_tBA235AC1AB36E7E3E2A54CA02C604B96C320AF88* __this, const RuntimeMethod* method) 
+{
+	{
+		Object__ctor_mE837C6B9FA8C6D5D109F4B2EC885D79919AC0EA2((RuntimeObject*)__this, NULL);
+		return;
+	}
 }
 #ifdef __clang__
 #pragma clang diagnostic pop

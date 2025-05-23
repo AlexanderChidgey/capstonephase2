@@ -2115,6 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cube: {fileID: 791235130}
+  detectionText: {fileID: 0}
 --- !u!4 &1689922334
 Transform:
   m_ObjectHideFlags: 0
