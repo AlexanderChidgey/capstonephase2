@@ -1,2 +1,19 @@
+# Unity folders (case-insensitive)
 [Ll]ibrary/
-[Bb]uild/test2/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+MemoryCaptures/
+UserSettings/
+
+# Build artifacts
+builds/
+builds/**/*.a
+*.a
+*.so
+*.dll
+
+# macOS system files
+.DS_Store

@@ -1,9 +1,0 @@
-{
-  "Messages": [
-    {
-      "Type": 1,
-      "Text": "Unity.IL2CPP.Building.BuilderFailedException: Build failed with 183 successful nodes and 1 failed ones\nAnnotation: Lib_iOS_arm64 z7ln/libGameAssembly.a\nCmdline: \u0022/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool\u0022 -arch_only arm64 -static -filelist \u0022z7ln/libGameAssembly.objectfiles\u0022 -o \u0022z7ln/libGameAssembly.a\u0022\nExitCode: 1\nStdout: \nfatal error: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/libtool: can\u0027t write to output file (No space left on device)\n\n   at il2cpp.Program.DoRun(TinyProfiler2 tinyProfiler, String[] args, RuntimePlatform platform, Il2CppCommandLineArguments il2CppCommandLineArguments, BuildingOptions buildingOptions, Boolean throwExceptions) in /Users/bokken/build/output/unity/il2cpp/il2cpp/Program.cs:line 319"
-    }
-  ],
-  "CommandLine": "--compile-cpp --platform=iOS --baselib-directory=/Users/alexanderchidgey/latest test/builds/Main1/Libraries --additional-defines=IL2CPP_DEBUG=0 --dotnetprofile=unityaot-macos --profiler-report --print-command-line --external-lib-il2-cpp=/Users/alexanderchidgey/latest test/builds/Main1/Libraries/libil2cpp.a --generatedcppdir=Il2CppOutputProject/Source/il2cppOutput --architecture=arm64 --outputpath=/Users/alexanderchidgey/Library/Developer/Xcode/DerivedData/Unity-iPhone-hhscflzcfqvwkpdwdntxlscdwyil/Build/Products/ReleaseForRunning-iphoneos/libGameAssembly.a --cachedirectory=/Users/alexanderchidgey/Library/Developer/Xcode/DerivedData/Unity-iPhone-hhscflzcfqvwkpdwdntxlscdwyil/Build/Intermediates.noindex/Unity-iPhone.build/ReleaseForRunning-iphoneos/artifacts/arm64 --configuration=Release"
-}
