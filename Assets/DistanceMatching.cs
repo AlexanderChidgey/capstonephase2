@@ -7,7 +7,7 @@ using System.Text;
 public class DistanceMatching : MonoBehaviour
 {
     [Header("Search Parameters")]
-    public float searchRadiusKm = 0.2f;
+    public float searchRadiusKm = 2f;
     [Tooltip("Weight between 0 and 1 to balance distance vs angle in sorting (0 = distance only, 1 = angle only)")]
     [Range(0, 1)]
     public float angleWeight = 0.5f;
@@ -67,7 +67,7 @@ public class DistanceMatching : MonoBehaviour
         }
     }
 
-    public string FindNearbySubstations(float latitude, float longitude, float heading)
+    public string FindNearbySubstations(float latitude, float longitude, float heading, string objectType)
     {
         // Return cached results if we have them
         if (hasFirstDetection && cachedResults != null)
@@ -80,15 +80,21 @@ public class DistanceMatching : MonoBehaviour
         List<MatchCandidate> candidates = new List<MatchCandidate>();
 
         var substations = dbLoader.GetSubstations();
+        Debug.Log(substations.Count);
 
         foreach (var substation in substations)
         {
             if (substation == null) continue;
 
+
+            if (substation.TR_TYPE != objectType) continue;
+            Debug.Log($"HELP! objectType: {objectType}, TR_TYPE: {(string)substation.TR_TYPE}");
+
+
             try
             {
                 float distance = Haversine(latitude, longitude, (float)substation.LAT, (float)substation.LON);
-                
+
                 if (distance <= searchRadiusKm)
                 {
                     float bearing = BearingBetweenPoints(latitude, longitude, (float)substation.LAT, (float)substation.LON);

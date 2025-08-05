@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using TMPro;
 using System.IO;
+using Newtonsoft.Json; // ← make sure Newtonsoft.Json is imported!
 
 [System.Serializable]
 public class Substation
@@ -20,7 +22,7 @@ public class Substation
 public class DBLoader : MonoBehaviour
 {
     public TextMeshProUGUI displayText;
-    public string systemIdToLoad = "2692672"; // <- Set in Inspector
+    public string systemIdToLoad = "2692672";
 
     private List<Substation> substations;
 
@@ -35,9 +37,28 @@ public class DBLoader : MonoBehaviour
 
         if (File.Exists(path))
         {
-            string json = File.ReadAllText(path);
-            substations = JsonHelper.FromJson<Substation>(json);
-            Debug.Log($"Successfully loaded {substations.Count} substations");
+            Debug.Log($"Reading from path: {path}");
+            Debug.Log($"File size: {new FileInfo(path).Length} bytes");
+
+            try
+            {
+                using (StreamReader file = File.OpenText(path))
+                using (JsonTextReader reader = new JsonTextReader(file))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    substations = serializer.Deserialize<List<Substation>>(reader);
+                }
+                Debug.Log($"Successfully loaded {substations.Count} substations");
+
+                // Optional: Verify by writing to a file
+                File.WriteAllText(Path.Combine(Application.persistentDataPath, "load_log.txt"),
+                    $"Loaded {substations.Count} items");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to load JSON: {e.Message}");
+                substations = new List<Substation>();
+            }
         }
         else
         {
@@ -46,7 +67,6 @@ public class DBLoader : MonoBehaviour
         }
     }
 
-    // Public method to access the substations list
     public List<Substation> GetSubstations()
     {
         if (substations == null)
@@ -56,7 +76,6 @@ public class DBLoader : MonoBehaviour
         return substations;
     }
 
-    // This method can be called from the Button!
     public void LoadSubstationInfoFromButton()
     {
         DisplaySubstationInfo(systemIdToLoad);
@@ -80,20 +99,5 @@ public class DBLoader : MonoBehaviour
         {
             displayText.text = $"System ID '{systemId}' not found.";
         }
-    }
-}
-
-public static class JsonHelper
-{
-    [System.Serializable]
-    private class Wrapper<T>
-    {
-        public List<T> Items;
-    }
-
-    public static List<T> FromJson<T>(string json)
-    {
-        string wrappedJson = "{\"Items\":" + json + "}";
-        return JsonUtility.FromJson<Wrapper<T>>(wrappedJson).Items;
     }
 }
