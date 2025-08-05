@@ -1,3 +1,6 @@
+# macOS
+.DS_Store
+
 # Unity folders (case-insensitive)
 [Ll]ibrary/
 [Tt]emp/
@@ -7,14 +10,37 @@
 [Ll]ogs/
 MemoryCaptures/
 UserSettings/
-
-# Build artifacts
+Builds/
 builds/
-builds/**/*.a
+build/
+
+# Compiled binary files
 *.a
+*.lib
 *.so
 *.dll
-*libiPhone-lib.a
+*.exe
+*.apk
+*.xcodeproj
+*.xcworkspace
 
-# macOS system files
-.DS_Store
+# Visual Studio/JetBrains Rider
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+
+# Local environment
+.vscode/
+.idea/
+.env
+.env.local
+
+# Unity-generated stuff that shouldn't be committed
+*.pidb
+*.booproj
+*.svd
+*.pdb
