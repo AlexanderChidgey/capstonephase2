@@ -14,6 +14,7 @@ builds/**/*.a
 *.a
 *.so
 *.dll
+*libiPhone-lib.a
 
 # macOS system files
 .DS_Store
