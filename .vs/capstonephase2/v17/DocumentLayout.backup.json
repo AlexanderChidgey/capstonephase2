@@ -1,0 +1,53 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|c:\\users\\tiha\\documents\\github\\capstonephase2\\assets\\ui\\uisafeareaadjuste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\uisafeareaadjuste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\ui\\scanscreenui.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\scanscreenui.uxml||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UISafeAreaAdjuste.cs",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UISafeAreaAdjuste.cs",
+              "RelativeDocumentMoniker": "Assets\\UI\\UISafeAreaAdjuste.cs",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UISafeAreaAdjuste.cs",
+              "RelativeToolTip": "Assets\\UI\\UISafeAreaAdjuste.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T14:03:02.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ScanScreenUI.uxml",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanScreenUI.uxml",
+              "RelativeDocumentMoniker": "Assets\\UI\\ScanScreenUI.uxml",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanScreenUI.uxml",
+              "RelativeToolTip": "Assets\\UI\\ScanScreenUI.uxml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2025-08-06T12:35:52.401Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
