@@ -7,7 +7,7 @@ public class UISetSafeArea : MonoBehaviour
     void Start()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
-        var botPad = root.Q<VisualElement>("BotPadding");
+        var botPad = root.Q<VisualElement>("SafeScreenPadding");
         botPad.style.paddingBottom = Screen.safeArea.yMin;
     }
 }

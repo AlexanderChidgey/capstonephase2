@@ -61,16 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\arCamerafeed.cs" />
-    <Compile Include="Assets\Scenes\ChangeScene.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\UI\Scripts\CutoutMaskUI.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\ARTemplateMenuManager.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\ARFeatheredPlaneMeshVisualizerCompanion.cs" />
+    <Compile Include="Assets\UI\UI Scripts\ToggleScanDataOverlayVisibility.cs" />
     <Compile Include="Assets\ObjectDetectionHandler.cs" />
     <Compile Include="Assets\DistanceMatching.cs" />
     <Compile Include="Assets\loadMap.cs" />
     <Compile Include="Assets\loadScan.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\GoalManager.cs" />
-    <Compile Include="Assets\UI\UISetSafeArea.cs" />
+    <Compile Include="Assets\UI\UI Scripts\UISetSafeArea.cs" />
     <Compile Include="Assets\objectDetect.cs" />
     <Compile Include="Assets\DBLoader.cs" />
     <Compile Include="Assets\Settings\Project Configuration\SceneTemplate_RotateCube.cs" />
@@ -84,6 +84,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\MobileARTemplateAssets\Shaders\ShadowReceiver\ShadowReceiverShaderFunctions.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\UI\Header.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\UI\Stylesheet.uss" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -92,6 +93,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\UI\ScanDataOverlay.uxml" />
     <None Include="Assets\MobileARTemplateAssets\UI\Fonts\OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
@@ -101,7 +103,8 @@
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\MobileARTemplateAssets\Shaders\URPShadowReceiver.shader" />
-    <None Include="Assets\UI\ScanScreenUI.uxml" />
+    <None Include="Assets\UI\MainUI.uxml" />
+    <None Include="Assets\UI\TopNavBar.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\MobileARTemplateAssets\Shaders\PlaneOcclusionShader.shader" />
   </ItemGroup>
