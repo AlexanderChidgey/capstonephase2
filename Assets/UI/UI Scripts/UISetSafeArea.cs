@@ -8,6 +8,7 @@ public class UISetSafeArea : MonoBehaviour
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
         var botPad = root.Q<VisualElement>("SafeScreenPadding");
-        botPad.style.paddingBottom = Screen.safeArea.yMin;
+        //need to come back later to keep bottom nav bar within safe zone of phone
+        //botPad.style.paddingBottom = Screen.safeArea.yMin;
     }
 }
