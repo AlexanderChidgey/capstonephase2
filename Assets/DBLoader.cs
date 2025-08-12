@@ -3,7 +3,7 @@ using UnityEngine;
 using System;
 using TMPro;
 using System.IO;
-using Newtonsoft.Json; // ← make sure Newtonsoft.Json is imported!
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class Substation

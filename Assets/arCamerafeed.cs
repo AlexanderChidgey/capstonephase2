@@ -12,7 +12,7 @@ using Unity.Collections.LowLevel.Unsafe;
 public class CaptureAndRunYOLO : MonoBehaviour
 {
     public ARCameraManager cameraManager;
-    public ObjectDetectionHandler detectionHandler; // Reference to the ObjectDetectionHandler script
+    public ObjectDetectionHandler detectionHandler; 
     public ModelAsset modelAsset;
     public RawImage displayImage;
     public int framesToExecute = 30;
@@ -128,6 +128,7 @@ public class CaptureAndRunYOLO : MonoBehaviour
 
                 int maxClass = -1;
                 float maxScore = 0f;
+                // Only get the score for each of the possible objects
                 for (int j = 4; j < 6; j++)
                 {
                     float score = output[0, j, i];
