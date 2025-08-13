@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "153954704089",
+    "project_id": "energyqld-915da",
+    "storage_bucket": "energyqld-915da.firebasestorage.app",
+    "database_url": "https://energyqld-915da-default-rtdb.firebaseio.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153954704089:android:809d3034934f79951a7cc8",
+        "android_client_info": {
+          "package_name": "com.EnergyQLD.Latest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzQG8CuZM34KXtj36w4-bY8IFmWTQsyDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
