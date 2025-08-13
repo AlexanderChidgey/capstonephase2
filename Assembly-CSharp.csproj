@@ -480,8 +480,19 @@
       <HintPath>Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
       <Private>False</Private>
     </Reference>
+<<<<<<< HEAD
+=======
+    <Reference Include="Firebase.Auth">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+>>>>>>> Timmy
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\jillejr.newtonsoft.json-for-unity@f2c6cb0981\Plugins\Newtonsoft.Json Editor\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Firebase.Database">
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
@@ -500,6 +511,7 @@
       <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
       <Private>False</Private>
     </Reference>
+<<<<<<< HEAD
     <Reference Include="Firebase.Database">
       <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
       <Private>False</Private>
@@ -508,6 +520,8 @@
       <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
       <Private>False</Private>
     </Reference>
+=======
+>>>>>>> Timmy
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.61f1\Editor\Data\PlaybackEngines\iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
       <Private>False</Private>
