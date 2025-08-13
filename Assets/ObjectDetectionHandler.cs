@@ -47,7 +47,14 @@ public class ObjectDetectionHandler : MonoBehaviour
         {
             foreach (var panel in matchInfoPanel)
             {
-                panel.SetActive(false);
+                if (panel != null)
+                {
+                    panel.SetActive(false);
+                }
+                else
+                {
+                    Debug.LogWarning("One of the matchInfoPanel entries is null!");
+                }
             }
         }
 

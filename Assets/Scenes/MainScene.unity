@@ -629,7 +629,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815926967}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13f4df77fe065ed4cb6bd503dc8f4179, type: 3}
   m_Name: 
@@ -649,6 +649,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab42856415af4e978f0afb50b3c8c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleButtonName: Circle_Btn
+  backButtonName: Back_Btn
+  scrollViewName: ScanDataScrollView
 --- !u!1 &942771956
 GameObject:
   m_ObjectHideFlags: 0
@@ -980,6 +983,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab42856415af4e978f0afb50b3c8c13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  circleButtonName: Circle_Btn
+  backButtonName: Back_Btn
+  scrollViewName: ScanDataScrollView
 --- !u!1 &1689922332
 GameObject:
   m_ObjectHideFlags: 0

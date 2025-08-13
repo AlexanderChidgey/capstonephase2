@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\ui\\stylesheet.uss||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|c:\\users\\tiha\\documents\\github\\capstonephase2\\assets\\ui\\ui scripts\\uicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\ui scripts\\uicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\ui\\ui scripts\\togglescandataoverlayvisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\ui scripts\\togglescandataoverlayvisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|c:\\users\\tiha\\documents\\github\\capstonephase2\\assets\\ui\\stylesheet.uss||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\stylesheet.uss||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\ui\\togglescandataoverlayvisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\togglescandataoverlayvisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\objectdetectionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\objectdetectionhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|c:\\users\\tiha\\documents\\github\\capstonephase2\\assets\\ui\\uisetsafearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\uisetsafearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\assets\\ui\\ui scripts\\uisetsafearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBCC95B5-3065-7B49-94A9-7EEAAE112146}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\ui scripts\\uisetsafearea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanOverlayVisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,6 +61,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanDataVisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\UI\\ToggleScanDataVisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanDataOverlayVisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\UI\\ToggleScanDataOverlayVisibility.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UISetSafeArea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\UI\\UISetSafeArea.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -62,11 +78,61 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UIController.cs",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\UIController.cs",
+              "RelativeDocumentMoniker": "Assets\\UI\\UI Scripts\\UIController.cs",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\UIController.cs",
+              "RelativeToolTip": "Assets\\UI\\UI Scripts\\UIController.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAgwAwAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-13T06:11:22.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ToggleScanDataOverlayVisibility.cs",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\ToggleScanDataOverlayVisibility.cs",
+              "RelativeDocumentMoniker": "Assets\\UI\\UI Scripts\\ToggleScanDataOverlayVisibility.cs",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\ToggleScanDataOverlayVisibility.cs",
+              "RelativeToolTip": "Assets\\UI\\UI Scripts\\ToggleScanDataOverlayVisibility.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADsAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-13T05:53:31.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ObjectDetectionHandler.cs",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\ObjectDetectionHandler.cs",
+              "RelativeDocumentMoniker": "Assets\\ObjectDetectionHandler.cs",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\ObjectDetectionHandler.cs",
+              "RelativeToolTip": "Assets\\ObjectDetectionHandler.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAUwDcAAABTAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-13T05:37:00.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "UISetSafeArea.cs",
+              "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\UISetSafeArea.cs",
+              "RelativeDocumentMoniker": "Assets\\UI\\UI Scripts\\UISetSafeArea.cs",
+              "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UI Scripts\\UISetSafeArea.cs",
+              "RelativeToolTip": "Assets\\UI\\UI Scripts\\UISetSafeArea.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-09T07:55:07.457Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "ToggleScanDataOverlayVisibility.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanDataOverlayVisibility.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\ToggleScanDataOverlayVisibility.cs",
@@ -74,12 +140,11 @@
               "RelativeToolTip": "Assets\\UI\\ToggleScanDataOverlayVisibility.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAIwAcAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-08T18:12:32.115Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-08T18:12:32.115Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "ToggleScanOverlayVisibility.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanOverlayVisibility.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\ToggleScanOverlayVisibility.cs",
@@ -90,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ToggleScanDataVisibility.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ToggleScanDataVisibility.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\ToggleScanDataVisibility.cs",
@@ -102,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ScanObject.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanObject.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\ScanObject.cs",
@@ -114,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 16,
               "Title": "UISetSafeArea.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UISetSafeArea.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\UISetSafeArea.cs",
@@ -122,25 +187,24 @@
               "RelativeToolTip": "Assets\\UI\\UISetSafeArea.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-08T16:52:50.761Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-08T16:52:50.761Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Stylesheet.uss",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\Stylesheet.uss",
               "RelativeDocumentMoniker": "Assets\\UI\\Stylesheet.uss",
               "ToolTip": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\Stylesheet.uss",
               "RelativeToolTip": "Assets\\UI\\Stylesheet.uss",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAIAAAAAAAAAAAAD4v5YAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-08-08T11:29:48.31Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "MainUI.uxml",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\MainUI.uxml",
               "RelativeDocumentMoniker": "Assets\\UI\\MainUI.uxml",
@@ -152,7 +216,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "ScanDataListController.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanDataListController.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\ScanDataListController.cs",
@@ -164,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "ScanDataOverlay.uss",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanDataOverlay.uss",
               "RelativeDocumentMoniker": "Assets\\UI\\ScanDataOverlay.uss",
@@ -175,7 +239,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "TopNavBar.uxml",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\TopNavBar.uxml",
               "RelativeDocumentMoniker": "Assets\\UI\\TopNavBar.uxml",
@@ -187,7 +251,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "ScanDataOverlay.uxml",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanDataOverlay.uxml",
               "RelativeDocumentMoniker": "Assets\\UI\\ScanDataOverlay.uxml",
@@ -198,7 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "UISafeAreaAdjuste.cs",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\UISafeAreaAdjuste.cs",
               "RelativeDocumentMoniker": "Assets\\UI\\UISafeAreaAdjuste.cs",
@@ -209,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "ScanScreenUI.uxml",
               "DocumentMoniker": "C:\\Users\\tiha\\Documents\\GitHub\\capstonephase2\\Assets\\UI\\ScanScreenUI.uxml",
               "RelativeDocumentMoniker": "Assets\\UI\\ScanScreenUI.uxml",
