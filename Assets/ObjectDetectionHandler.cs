@@ -4,6 +4,20 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
+using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using System.Linq;
+
+
+
+public static class DetectionDataStore
+{
+    public static string SelectedName;
+    public static string SelectedId;
+    public static float Latitude;
+    public static float Longitude;
+    public static float Heading;
+}
 
 public class ObjectDetectionHandler : MonoBehaviour
 {
@@ -12,23 +26,32 @@ public class ObjectDetectionHandler : MonoBehaviour
     public TMP_Text[] matchTexts;
     public TMP_Text[] matchIds;
     public GameObject[] matchInfoPanel;
-    // public TMP_Text match1Id;
-    // public TMP_Text match2Name;
-    // public TMP_Text match2Id;
-
     private DistanceMatching distanceMatching;
+    private UIController uiController;
 
     void Start()
     {
-    if (matchInfoPanel != null)
-    {
+        var uiDocumentGO = GameObject.Find("UIDocument");
+        if (uiDocumentGO != null)
+        {
+            uiController = uiDocumentGO.GetComponent<UIController>();
+            if (uiController == null)
+                Debug.LogWarning("UIController component not found on UIDocument GameObject.");
+        }
+        else
+        {
+            Debug.LogWarning("UIDocument GameObject not found.");
+        }
+
+        if (matchInfoPanel != null)
+        {
             foreach (var panel in matchInfoPanel)
             {
                 panel.SetActive(false);
+            }
         }
-    }
 
-    if (matchTexts != null)
+        if (matchTexts != null)
         {
             foreach (var text in matchTexts)
             {
@@ -38,14 +61,14 @@ public class ObjectDetectionHandler : MonoBehaviour
             }
         }
 
-    if (matchIds != null)
-    {
-        foreach (var text in matchIds)
+        if (matchIds != null)
         {
-            if (text != null)
-                text.gameObject.SetActive(false);
+            foreach (var text in matchIds)
+            {
+                if (text != null)
+                    text.gameObject.SetActive(false);
+            }
         }
-    }
 
         if (Cube != null)
         {
@@ -60,7 +83,7 @@ public class ObjectDetectionHandler : MonoBehaviour
         // matchTexts = new TMP_Text[] { match1Text, match2Text, match3Text };
         // matchIds = new TMP_Text[] { match1Id, match2Id, match3Id };
 
-        
+
         // Get the DistanceMatching component
         distanceMatching = GetComponent<DistanceMatching>();
         if (distanceMatching == null)
@@ -70,48 +93,48 @@ public class ObjectDetectionHandler : MonoBehaviour
         }
     }
     public class MatchInfo
-        {
-            public string Name;
-            public string ID;
-        }
-
-
-public static List<MatchInfo> ExtractMatches(string input)
-{
-    var results = new List<MatchInfo>();
-    string[] lines = input.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-    MatchInfo current = null;
-
-    foreach (var line in lines)
     {
-        if (line.StartsWith("Match"))
-        {
-            current = new MatchInfo();
-            // Get the name after the colon
-            int colonIndex = line.IndexOf(':');
-            if (colonIndex >= 0)
-            {
-                current.Name = line.Substring(colonIndex + 1).Trim();
-            }
-            results.Add(current);
-        }
-        else if (current != null && line.Trim().Contains("ID:"))
-        {
-            var parts = line.Trim().Split(',');
+        public string Name;
+        public string ID;
+    }
 
-            if (parts.Length >= 2)
+
+    public static List<MatchInfo> ExtractMatches(string input)
+    {
+        var results = new List<MatchInfo>();
+        string[] lines = input.Split(new[] { "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+        MatchInfo current = null;
+
+        foreach (var line in lines)
+        {
+            if (line.StartsWith("Match"))
             {
-                Match idMatch = Regex.Match(parts[1], @"ID:(\d+)");
-                if (idMatch.Success)
+                current = new MatchInfo();
+                // Get the name after the colon
+                int colonIndex = line.IndexOf(':');
+                if (colonIndex >= 0)
                 {
-                    current.ID = idMatch.Groups[1].Value;
+                    current.Name = line.Substring(colonIndex + 1).Trim();
+                }
+                results.Add(current);
+            }
+            else if (current != null && line.Trim().Contains("ID:"))
+            {
+                var parts = line.Trim().Split(',');
+
+                if (parts.Length >= 2)
+                {
+                    Match idMatch = Regex.Match(parts[1], @"ID:(\d+)");
+                    if (idMatch.Success)
+                    {
+                        current.ID = idMatch.Groups[1].Value;
+                    }
                 }
             }
         }
-    }
 
-    return results;
-}
+        return results;
+    }
 
     public void HandleDetection(int classId, float latitude, float longitude, float heading)
     {
@@ -145,7 +168,7 @@ public static List<MatchInfo> ExtractMatches(string input)
 
         // Update detection text
 
-        if (detectionText == null || matchTexts == null)
+        if (matchTexts == null)
         {
             Debug.LogError("Cannot update text - TextMeshPro Text component is null!");
         }
@@ -155,42 +178,79 @@ public static List<MatchInfo> ExtractMatches(string input)
         }
         else
         {
-            
-
-            string fullText = $"Detected: {objectType}\n" +
-                              $"Lat: {latitude:F6}, Lon: {longitude:F6}\n" +
-                              $"Heading: {heading:F6}°\n" +
-                              $"Substations:\n{nearbySubstations}";
-
-            Debug.Log($"Setting detectionText: {fullText.Length} chars\n{fullText}");
-
             var matches = ExtractMatches(nearbySubstations);
-
-            for (int i = 0; i < matchTexts.Length; i++)
+            var showCount = 3;
+            if (uiController != null)
             {
-                if (i < matches.Count)
-                {
-                    matchTexts[i].SetText($"{matches[i].Name}");
-                    matchIds[i].SetText($"{matches[i].ID}");
-                    matchTexts[i].gameObject.SetActive(true);
-                    matchIds[i].gameObject.SetActive(true);
-                    matchInfoPanel[i].SetActive(true);
-                }
-                else
-                {
-                    matchTexts[i].gameObject.SetActive(false);
-                    matchIds[i].gameObject.SetActive(false);
-                    matchInfoPanel[i].SetActive(false);
-                }
+                uiController.UpdateDetectionUI(matches.Take(3).ToList());
+            }else
+            {
+                Debug.LogWarning("UIController not assigned.");
             }
 
+            // Also update your detectionText if you want:
+            // if (detectionText != null)
+            // {
+            //     string fullText = $"Detected: {objectType}\n" +
+            //                     $"Lat: {latitude:F6}, Lon: {longitude:F6}\n" +
+            //                     $"Heading: {heading:F6}°\n" +
+            //                     $"Substations:\n{nearbySubstations}";
+            //     detectionText.SetText(fullText);
+            //     detectionText.ForceMeshUpdate();
+            // }
 
-            
+
+            // for (int i = 0; i < matchTexts.Length; i++)
+            // {
+            //     if (i < showCount)
+            //     {
+            //         matchTexts[i].SetText($"{matches[i].Name}");
+            //         matchIds[i].SetText($"{matches[i].ID}");
+            //         matchTexts[i].gameObject.SetActive(true);
+            //         matchIds[i].gameObject.SetActive(true);
+            //         matchInfoPanel[i].SetActive(true);
+
+            //         // Add a click listener to the panel/gameobject to navigate to InfoData
+            //         var index = i; // local copy for closure
+            //         var buttonComponent = matchInfoPanel[i].GetComponent<UnityEngine.UI.Button>();
+            //         if (buttonComponent != null)
+            //         {
+            //             buttonComponent.onClick.RemoveAllListeners(); // Remove existing listeners to avoid duplicates
+            //             buttonComponent.onClick.AddListener(() =>
+            //             {
+            //                 // Save data to static store
+            //                 DetectionDataStore.SelectedName = matches[index].Name;
+            //                 DetectionDataStore.SelectedId = matches[index].ID;
+            //                 DetectionDataStore.Latitude = latitude;
+            //                 DetectionDataStore.Longitude = longitude;
+            //                 DetectionDataStore.Heading = heading;
+
+            //                 // Load InfoData scene
+            //                 SceneManager.LoadScene("InfoData");
+            //             });
+            //         }
+            //         else
+            //         {
+            //             Debug.LogWarning($"No Button component found on matchInfoPanel[{i}]");
+            //         }
+            //     }
+            //     else
+            //     {
+            //         matchTexts[i].gameObject.SetActive(false);
+            //         matchIds[i].gameObject.SetActive(false);
+            //         matchInfoPanel[i].SetActive(false);
+            //     }
+            // }
 
 
 
-            detectionText.SetText(fullText);
-            detectionText.ForceMeshUpdate();
+
+
+
+
+
+            // detectionText.SetText(fullText);
+            // detectionText.ForceMeshUpdate();
             // LayoutRebuilder.ForceRebuildLayoutImmediate(detectionText.rectTransform);
         }
 

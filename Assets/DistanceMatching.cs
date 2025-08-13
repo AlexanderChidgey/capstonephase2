@@ -88,7 +88,7 @@ public class DistanceMatching : MonoBehaviour
 
 
             if (substation.TR_TYPE != objectType) continue;
-            Debug.Log($"HELP! objectType: {objectType}, TR_TYPE: {(string)substation.TR_TYPE}");
+            // Debug.Log($"HELP! objectType: {objectType}, TR_TYPE: {(string)substation.TR_TYPE}");
 
 
             try

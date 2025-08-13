@@ -1,64 +1,69 @@
-using System;
+// ChatGPT cleaned Up
 using UnityEngine;
+
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
 public class ToggleScanDataOverlayVisibility : MonoBehaviour
 {
-    public string circleButtonName = "Circle_Btn"; 
-    public string backButtonName = "Back_Btn";
-    public string scrollViewName = "ScanDataScrollView";
+    [SerializeField] private string circleButtonName = "Circle_Btn"; 
+    [SerializeField] private string backButtonName = "Back_Btn";
+    [SerializeField] private string scrollViewName = "ScanDataScrollView";
 
     private VisualElement scrollView;
     private bool isVisible = true;
 
-    void OnEnable()
+    private void OnEnable()
     {
         var root = GetComponent<UIDocument>().rootVisualElement;
 
-        var circleButton = root.Q<VisualElement>(circleButtonName);
-        var backButton = root.Q<VisualElement>(backButtonName);
+        var circleButton = root.Q<Button>(circleButtonName);
+        var backButton = root.Q<Button>(backButtonName);
         scrollView = root.Q<VisualElement>(scrollViewName);
 
         if (circleButton != null)
         {
-            circleButton.RegisterCallback<ClickEvent>(_ => ToggleVisibility());
-            Console.WriteLine("Circle button registered");
-        }
-
-        if (backButton != null)
-        {
-            backButton.RegisterCallback<ClickEvent>(_ => HideOverlay());
-            Console.WriteLine("Back button registered");
-        }
-    }
-
-    void ToggleVisibility()
-    {
-        isVisible = !isVisible;
-
-        if (isVisible)
-        {
-            ShowOverlay();
+            circleButton.clicked += ToggleVisibility;
+            Debug.Log("Circle button registered");
         }
         else
         {
-            HideOverlay();
+            Debug.LogWarning($"Button '{circleButtonName}' not found in UI.");
         }
 
-        Console.WriteLine("Toggle visibility");
+        if (backButton != null)
+            {
+                backButton.clicked += HideOverlay;
+                Debug.Log("Back button registered");
+            }
+            else
+            {
+                Debug.LogWarning($"Button '{backButtonName}' not found in UI.");
+            }
     }
-
-    void ShowOverlay()
+    public void ShowOverlay()
     {
-        scrollView.style.display = DisplayStyle.Flex;
-        Console.WriteLine("Overlay shown");
+        if (scrollView != null)
+        {
+            scrollView.style.display = DisplayStyle.Flex;
+            isVisible = true;
+            Debug.Log("Overlay shown");
+        }
     }
 
-    void HideOverlay()
+
+
+    private void ToggleVisibility()
+    {
+        isVisible = !isVisible;
+        scrollView.style.display = isVisible ? DisplayStyle.Flex : DisplayStyle.None;
+        Debug.Log($"Overlay visibility toggled: {(isVisible ? "Shown" : "Hidden")}");
+    }
+
+    private void HideOverlay()
     {
         scrollView.style.display = DisplayStyle.None;
-        Console.WriteLine("Overlay hidden");
         isVisible = false;
+        Debug.Log("Overlay hidden");
     }
 }
