@@ -4,7 +4,7 @@
     <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
     <ui:VisualElement name="SafeArea" style="flex-grow: 1; overflow: hidden; height: 3626px;">
         <ui:Button text="&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Circle_Btn" style="background-image: url(&quot;project://database/Assets/Images/Icons/CircleIcon.png?fileID=2800000&amp;guid=1a4c368932f721747a25c7283229f3bf&amp;type=3#CircleIcon&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(188, 188, 188, 0); margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 20%; height: 20%; align-items: auto; justify-content: center; align-self: center; position: absolute; bottom: 15%; top: auto; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
-        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: none; visibility: visible; overflow: visible; position: absolute; left: 0; right: 0; bottom: 0%; top: 0; opacity: 1;">
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: flex; visibility: visible; overflow: visible; position: absolute; right: 8px; bottom: 80px; top: -80px; opacity: 1; flex-grow: 0; flex-shrink: 1; width: 753px;">
             <ui:VisualElement name="EmptySpace" style="flex-grow: 0; flex-basis: 20%; display: flex; visibility: visible;" />
             <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 0%; flex-direction: column; flex-shrink: 1; position: relative;">
                 <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex;" />
@@ -13,18 +13,18 @@
         <ui:VisualElement name="TopNavBarCanvas" style="flex-grow: 0; flex-basis: 12.5%;">
             <ui:Instance template="TopNavBar" name="TopNavBar" style="flex-basis: 100%;" />
         </ui:VisualElement>
-        <ui:VisualElement name="DetectionResultsContainer" style="flex-grow: 1;">
+        <ui:VisualElement name="DetectionResultsContainer" style="flex-grow: 1; display: flex; visibility: visible;">
             <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection1Button" style="flex-grow: 0.05; flex-direction: column; flex-wrap: nowrap; align-items: stretch; justify-content: space-around; align-self: stretch; display: flex; visibility: visible;">
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection1Label" style="-unity-text-align: middle-left; font-size: 30px;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection1Id" style="-unity-text-align: middle-left; font-size: 30px;" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection1Label" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection1Id" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
             </ui:Button>
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Button" style="flex-grow: 0.05; justify-content: space-around;">
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Label" style="-unity-text-align: middle-left; font-size: 30px;" />
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Id" style="-unity-text-align: middle-left; font-size: 30px;" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Button" style="flex-grow: 0.05; justify-content: space-around; display: flex; visibility: visible; overflow: visible;">
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Label" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection2Id" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
             </ui:Button>
-            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Button" style="flex-grow: 0.05; justify-content: space-around;">
-                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Label" style="-unity-text-align: middle-left; font-size: 30px;" />
-                <ui:Label tabindex="-1" text="Yolo" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Id" style="-unity-text-align: middle-left; font-size: 30px;" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Button" style="flex-grow: 0.05; justify-content: space-around; display: flex; visibility: visible;">
+                <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Label" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
+                <ui:Label tabindex="-1" text="Yolo" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Id" style="-unity-text-align: middle-left; font-size: 30px; display: none;" />
             </ui:Button>
         </ui:VisualElement>
         <ui:VisualElement name="BottomNavBarCanvas" style="flex-grow: 0; flex-basis: 10%; flex-direction: row; flex-shrink: 1; position: absolute; justify-content: space-around; align-self: auto; padding-top: 5%; padding-bottom: 5%; padding-right: 5%; padding-left: 5%; background-color: rgb(53, 124, 131); flex-wrap: nowrap; min-width: 100px; min-height: 250px; bottom: 0; right: 0; top: auto; left: 0; height: 250px;">
