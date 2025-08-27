@@ -168,7 +168,11 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
+<<<<<<< HEAD
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+=======
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -524,7 +528,11 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< HEAD
   m_IsActive: 0
+=======
+  m_IsActive: 1
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
 --- !u!114 &168368780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1292,7 +1300,11 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< HEAD
   m_IsActive: 0
+=======
+  m_IsActive: 1
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
 --- !u!114 &1188978834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1495,7 +1507,11 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
+<<<<<<< HEAD
   m_IsActive: 0
+=======
+  m_IsActive: 1
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
 --- !u!114 &1453673703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1686,6 +1702,7 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+<<<<<<< HEAD
 --- !u!1 &1788528728
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,6 +1752,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
 --- !u!1 &1952852559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,4 +2153,7 @@ SceneRoots:
   - {fileID: 1188978836}
   - {fileID: 168368782}
   - {fileID: 1453673706}
+<<<<<<< HEAD
   - {fileID: 1788528730}
+=======
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c

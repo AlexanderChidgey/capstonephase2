@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD
 --- !u!1 &1257486800756004
 GameObject:
   m_ObjectHideFlags: 0
@@ -7,6 +8,25 @@ GameObject:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
+=======
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1257486800756004}
+  m_IsPrefabParent: 1
+--- !u!1 &1257486800756004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
   m_Component:
   - component: {fileID: 4867834046800562}
   - component: {fileID: 114478715909612932}
@@ -19,6 +39,7 @@ GameObject:
   m_IsActive: 1
 --- !u!4 &4867834046800562
 Transform:
+<<<<<<< HEAD
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -38,6 +59,24 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+=======
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1257486800756004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114478715909612932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
   m_GameObject: {fileID: 1257486800756004}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -118,12 +157,21 @@ MonoBehaviour:
       tileJsonData:
         tileJSONLoaded: 0
         LayerDisplayNames: []
+<<<<<<< HEAD
       _sourceType: 2
       sourceOptions:
         isActive: 1
         layerSource:
           Name: Mapbox Terrain
           Id: mapbox.mapbox-streets-v8
+=======
+      _sourceType: 3
+      sourceOptions:
+        isActive: 0
+        layerSource:
+          Name: Mapbox Terrain
+          Id: mapbox.3d-buildings,mapbox.mapbox-streets-v7
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
           Modified: 
           UserName: 
       useOptimizedStyle: 0
@@ -138,5 +186,8 @@ MonoBehaviour:
       vectorSubLayers: []
       locationPrefabList: []
   _tileProvider: {fileID: 0}
+<<<<<<< HEAD
   _previewOptions:
     isPreviewEnabled: 0
+=======
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c

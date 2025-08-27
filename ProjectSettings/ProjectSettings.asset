@@ -165,7 +165,11 @@ PlayerSettings:
   applicationIdentifier:
     Android: com.unity.template.ar_mobile
     Standalone: com.unity.template.ar-mobile
+<<<<<<< HEAD
     iPhone: com.EnergyQLD.Latest
+=======
+    iPhone: com.alex.test4
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
   buildNumber:
     Bratwurst: 0
     Standalone: 0

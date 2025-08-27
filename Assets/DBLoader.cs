@@ -8,6 +8,7 @@ using Firebase;
 using System.Linq;
 using Firebase.Database;
 using Firebase.Extensions;
+using Newtonsoft.Json;
 
 [System.Serializable]
 public class Substation

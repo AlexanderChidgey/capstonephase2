@@ -14,9 +14,21 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scan.unity
     guid: f84a1dc1bbc7645798dcd37ac0b0e256
+<<<<<<< HEAD
   - enabled: 1
     path: Assets/ZoomableMap.unity
     guid: 87d14efcacd304918bd9685a11487da1
+=======
+  - enabled: 0
+    path: Assets/Map.unity
+    guid: 618e082dc61a140c1a8bf2291f64edb3
+  - enabled: 0
+    path: Assets/MapScene.unity
+    guid: 26ca248a741e542dcad1332f47f2aa38
+  - enabled: 1
+    path: Assets/ZoomableMap.unity
+    guid: bc4326017bc1a4dfda868aa8b9c92fad
+>>>>>>> 41c7ffdf8051867dc7c5da2ec4944a4513753d8c
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

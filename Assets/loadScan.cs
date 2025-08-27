@@ -7,6 +7,11 @@ public class SceneLoader : MonoBehaviour
     {
         SceneManager.LoadScene("MainScene");
     }
+    public void LoadHomeScreen()
+    {
+        SceneManager.LoadScene("ZoomableMap");
+    }
+
     public void LoadMapScene()
     {
         SceneManager.LoadScene("ZoomableMap");
