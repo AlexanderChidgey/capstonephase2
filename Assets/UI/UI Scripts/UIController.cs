@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(UIDocument))]
@@ -11,11 +12,14 @@ public class UIController : MonoBehaviour
     [SerializeField] private string backButtonName = "Back_Btn";
     [SerializeField] private string scrollViewName = "ScanDataScrollView";
     [SerializeField] private string resultsContainerName = "DetectionResultsContainer";
+    [SerializeField] private string mapButtonName = "Map_Btn";
 
     private UIDocument uiDocument;
     private VisualElement root;
+    
 
     private VisualElement scrollView;
+    private Button mapButton;
     private VisualElement resultsContainer;
 
     private Button circleButton;
@@ -52,6 +56,8 @@ public class UIController : MonoBehaviour
         circleButton = root.Q<Button>(circleButtonName);
         backButton = root.Q<Button>(backButtonName);
         scrollView = root.Q<VisualElement>(scrollViewName);
+        mapButton = root.Q<Button>(mapButtonName);
+
         resultsContainer = root.Q<VisualElement>(resultsContainerName);
 
         if (circleButton != null)
@@ -63,6 +69,17 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Button '" + circleButtonName + "' not found in UI.");
         }
+        if (mapButton != null)
+        {
+            mapButton.clicked += OnMapButtonClicked;
+            Debug.Log("Map button registered");
+        }
+        else
+        {
+            Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
+        }
+
+
 
         if (backButton != null)
         {
@@ -74,6 +91,12 @@ public class UIController : MonoBehaviour
             Debug.LogWarning("Button '" + backButtonName + "' not found in UI.");
         }
 
+        if (scrollView != null)
+        {
+            scrollView.style.display = DisplayStyle.None;
+            Debug.Log("scrollView hidden by default.");
+        }
+
         if (resultsContainer != null)
         {
             resultsContainer.style.display = DisplayStyle.None;
@@ -82,39 +105,18 @@ public class UIController : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            string buttonName = "Detection" + (i + 1).ToString() + "Button";
-            Button detectionButton = root.Q<Button>(buttonName);
+            detectionButtons[i] = root.Q<Button>($"Detection{i + 1}Button");
 
-            if (detectionButton == null)
+            if (detectionButtons[i] != null)
             {
-                Debug.LogWarning("'" + buttonName + "' not found in UI.");
-                continue;
+                detectionNameLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Label");
+                detectionIdLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Id");
             }
-
-            detectionButtons[i] = detectionButton;
-
-            string labelName = "Detection" + (i + 1).ToString() + "Label";
-            detectionNameLabels[i] = detectionButton.Q<Label>(labelName);
-            if (detectionNameLabels[i] == null)
-            {
-                Debug.LogWarning("Label '" + labelName + "' not found under " + buttonName + ".");
-            }
-
-            string idName = "Detection" + (i + 1).ToString() + "Id";
-            detectionIdLabels[i] = detectionButton.Q<Label>(idName);
-            if (detectionIdLabels[i] == null)
-            {
-                Debug.LogWarning("Label '" + idName + "' not found under " + buttonName + ".");
-            }
-
-            int index = i;
-            detectionHandlers[i] = delegate
-            {
-                Debug.Log("Detection " + (index + 1).ToString() + " button clicked.");
-                OnDetectionButtonClicked(index);
-            };
-
-            detectionButton.clicked += detectionHandlers[i];
+            // else
+            // {
+            //     Debug.LogWarning("'" + buttonName + "' not found in UI.");
+            //     continue;
+            // }
         }
     }
 
@@ -127,6 +129,10 @@ public class UIController : MonoBehaviour
         if (backButton != null)
         {
             backButton.clicked -= OnBackButtonClicked;
+        }
+        if (mapButton != null)
+        {
+            mapButton.clicked -= OnMapButtonClicked;
         }
 
         for (int i = 0; i < detectionButtons.Length; i++)
@@ -158,6 +164,13 @@ public class UIController : MonoBehaviour
             Debug.Log("DetectionResultsContainer shown.");
         }
     }
+    private void OnMapButtonClicked()
+    {
+        string sceneName = "ZoomableMap"; 
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
+
 
     private void OnBackButtonClicked()
     {
@@ -193,58 +206,40 @@ public class UIController : MonoBehaviour
     }
 
     public void UpdateDetectionUI(List<ObjectDetectionHandler.MatchInfo> matches)
+{
+    currentMatches = matches ?? new List<ObjectDetectionHandler.MatchInfo>();
+
+    for (int i = 0; i < detectionButtons.Length; i++)
     {
-        if (matches == null)
+        if (detectionButtons[i] == null) continue;
+
+        // Remove previous handler if it exists
+        if (detectionHandlers[i] != null)
         {
-            matches = new List<ObjectDetectionHandler.MatchInfo>();
+            detectionButtons[i].clicked -= detectionHandlers[i];
         }
 
-        currentMatches = matches;
-        Debug.Log("UpdateDetectionUI called with " + currentMatches.Count.ToString() + " matches.");
-
-        for (int i = 0; i < detectionButtons.Length; i++)
+        if (i < currentMatches.Count)
         {
-            Button btn = detectionButtons[i];
-            if (btn == null)
-            {
-                continue;
-            }
+            detectionNameLabels[i].text = currentMatches[i].Name;
+            detectionIdLabels[i].text = currentMatches[i].ID;
+            detectionButtons[i].style.display = DisplayStyle.Flex;
 
-            if (i < currentMatches.Count)
-            {
-                ObjectDetectionHandler.MatchInfo match = currentMatches[i];
-
-                if (detectionNameLabels[i] != null)
-                {
-                    detectionNameLabels[i].text = match != null ? match.Name : "";
-                }
-
-                if (detectionIdLabels[i] != null)
-                {
-                    detectionIdLabels[i].text = match != null ? match.ID : "";
-                }
-
-                btn.style.display = DisplayStyle.Flex;
-            }
-            else
-            {
-                if (detectionNameLabels[i] != null)
-                {
-                    detectionNameLabels[i].text = "";
-                }
-                if (detectionIdLabels[i] != null)
-                {
-                    detectionIdLabels[i].text = "";
-                }
-                btn.style.display = DisplayStyle.None;
-            }
+            int index = i; // capture fixed index
+            detectionHandlers[i] = () => OnDetectionButtonClicked(index);
+            detectionButtons[i].clicked += detectionHandlers[i];
         }
-
-        if (resultsContainer != null)
+        else
         {
-            resultsContainer.style.display = DisplayStyle.Flex;
+            detectionNameLabels[i].text = "";
+            detectionIdLabels[i].text = "";
+            detectionButtons[i].style.display = DisplayStyle.None;
+
+            detectionHandlers[i] = null;
         }
     }
+}
+
 
     private void OnDetectionButtonClicked(int i)
     {
@@ -317,3 +312,6 @@ public class UIController : MonoBehaviour
     }
 
 }
+
+
+

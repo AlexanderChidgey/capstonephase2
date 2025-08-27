@@ -15,6 +15,9 @@ public class CaptureAndRunYOLO : MonoBehaviour
     public ObjectDetectionHandler detectionHandler; // Reference to the ObjectDetectionHandler script
     public ModelAsset modelAsset;
     public RawImage displayImage;
+    public DBLoader dbLoader;
+    private List<Substation> substations;
+
     public int framesToExecute = 30;
     private bool objectDetected = false;
 
@@ -50,6 +53,20 @@ public class CaptureAndRunYOLO : MonoBehaviour
             Debug.LogError("Unable to start location services.");
             yield break;
         }
+
+        while (!dbLoader.IsLoaded)
+        {
+            yield return null;
+        }
+
+        substations = dbLoader.GetSubstations();
+        Debug.Log($"Substations loaded: {substations.Count}");
+        if (detectionHandler != null)
+        {
+            detectionHandler.SetSubstations(substations);
+        }
+
+
 
         var model = ModelLoader.Load(modelAsset);
         worker = new Worker(model, BackendType.GPUCompute);

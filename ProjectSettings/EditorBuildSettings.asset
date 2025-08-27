@@ -8,12 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 4755b35b590504809a7525fd2109c2e2
-  - enabled: 1
+  - enabled: 0
     path: Assets/Homepage.unity
     guid: 4ce697b2613be4b1dbdfeac76e965de9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scan.unity
     guid: f84a1dc1bbc7645798dcd37ac0b0e256
+  - enabled: 1
+    path: Assets/ZoomableMap.unity
+    guid: 87d14efcacd304918bd9685a11487da1
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

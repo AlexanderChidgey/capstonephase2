@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using TMPro;
 using System.IO;
-using Newtonsoft.Json; // ← make sure Newtonsoft.Json is imported!
+using TMPro;
+using Newtonsoft.Json;
+using Firebase;
+using System.Linq;
+using Firebase.Database;
+using Firebase.Extensions;
 
 [System.Serializable]
 public class Substation
@@ -19,61 +23,126 @@ public class Substation
     public string REFRESH_DT;
 }
 
+
 public class DBLoader : MonoBehaviour
 {
     public TextMeshProUGUI displayText;
-    public string systemIdToLoad = "2692672";
+    public string systemIdToLoad = "0";
+    public bool IsLoaded { get; private set; } = false;
 
     private List<Substation> substations;
+    [SerializeField] private convertToGeo geoConverter;
 
-    void Awake()
+
+    private void SaveSubstationsToJson()
     {
-        LoadDatabase();
+        if (substations == null || substations.Count == 0) return;
+
+        string json = JsonConvert.SerializeObject(substations, Formatting.Indented);
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, "substations.json"), json);
+        geoConverter.Convert(substations);
+
+        Debug.Log($"Saved {substations.Count} substations to JSON.");
+
     }
-
-    private void LoadDatabase()
+    private void LoadSubstationsFromJson()
     {
-        string path = Path.Combine(Application.streamingAssetsPath, "DistSubstations.json");
-
+        string path = Path.Combine(Application.persistentDataPath, "substations.json");
+        // if (!File.Exists(path)) return false;
         if (File.Exists(path))
         {
-            Debug.Log($"Reading from path: {path}");
-            Debug.Log($"File size: {new FileInfo(path).Length} bytes");
-
-            try
-            {
-                using (StreamReader file = File.OpenText(path))
-                using (JsonTextReader reader = new JsonTextReader(file))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    substations = serializer.Deserialize<List<Substation>>(reader);
-                }
-                Debug.Log($"Successfully loaded {substations.Count} substations");
-
-                // Optional: Verify by writing to a file
-                File.WriteAllText(Path.Combine(Application.persistentDataPath, "load_log.txt"),
-                    $"Loaded {substations.Count} items");
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Failed to load JSON: {e.Message}");
-                substations = new List<Substation>();
-            }
+            string json = File.ReadAllText(path);
+            substations = JsonConvert.DeserializeObject<List<Substation>>(json);
+            IsLoaded = true;
+            Debug.Log($"Loaded {substations.Count} substations from local JSON");
+            OnSubstationsLoaded?.Invoke(substations);
         }
         else
         {
-            Debug.LogError("DistSubstations.json not found.");
-            substations = new List<Substation>();
+            Debug.Log("No local JSON found, will fetch from Firebase");
+            LoadDatabaseFromFirebase();
         }
     }
 
+
+    void Awake()
+    {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.Result != DependencyStatus.Available)
+            {
+                Debug.LogError("Firebase dependencies not available: " + task.Result);
+                return;
+            }
+
+            // ✅ Initialize default Firebase app
+            AppOptions options = new AppOptions
+            {
+                ApiKey = "AIzaSyBzQG8CuZM34Ktj36w4-bY8IFmWTQsyDk",
+                AppId = "1:153954704089:android:809d3034934f79951a7cc8",
+                ProjectId = "energyqld-915da",
+                DatabaseUrl = new Uri("https://energyqld-915da-default-rtdb.firebaseio.com/")
+            };
+
+            if (FirebaseApp.DefaultInstance == null)
+            {
+                FirebaseApp.Create(options);
+            }
+
+            // LoadDatabaseFromFirebase();
+            LoadSubstationsFromJson();
+        });
+    }
+
+    public event Action<List<Substation>> OnSubstationsLoaded;
+
+    private void LoadDatabaseFromFirebase()
+    {
+        Debug.Log("Loading substations from Firebase...");
+
+        var database = FirebaseDatabase.DefaultInstance;
+
+        database.RootReference.GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.LogError("Firebase data load error: " + task.Exception);
+                substations = new List<Substation>();
+                IsLoaded = true;
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                string json = snapshot.GetRawJsonValue();
+
+                if (!string.IsNullOrEmpty(json))
+                {
+                    try
+                    {
+                        substations = JsonConvert.DeserializeObject<List<Substation>>(json);
+                        Debug.Log($"Successfully loaded {substations.Count} substations from Firebase");
+                        IsLoaded = true;
+                        SaveSubstationsToJson();
+                        // Notify any listeners that data is ready
+                        OnSubstationsLoaded?.Invoke(substations);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError("Failed to parse Firebase JSON: " + e.Message);
+                        substations = new List<Substation>();
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Firebase returned empty data.");
+                    substations = new List<Substation>();
+                }
+            }
+        });
+    }
     public List<Substation> GetSubstations()
     {
-        if (substations == null)
-        {
-            LoadDatabase();
-        }
-        return substations;
+        return substations ?? new List<Substation>();
     }
 
     public void LoadSubstationInfoFromButton()
@@ -83,6 +152,12 @@ public class DBLoader : MonoBehaviour
 
     public void DisplaySubstationInfo(string systemId)
     {
+        if (substations == null)
+        {
+            displayText.text = "Data not yet loaded from Firebase.";
+            return;
+        }
+
         Substation result = substations.Find(s => s.SYSTEM_ID == systemId);
 
         if (result != null)

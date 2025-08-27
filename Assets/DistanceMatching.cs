@@ -7,7 +7,7 @@ using System.Text;
 public class DistanceMatching : MonoBehaviour
 {
     [Header("Search Parameters")]
-    public float searchRadiusKm = 2f;
+    public float searchRadiusKm = 1f;
     [Tooltip("Weight between 0 and 1 to balance distance vs angle in sorting (0 = distance only, 1 = angle only)")]
     [Range(0, 1)]
     public float angleWeight = 0.5f;
@@ -66,8 +66,22 @@ public class DistanceMatching : MonoBehaviour
             }
         }
     }
+    // void Start()
+    // {
+    //     if (dbLoader != null)
+    //     {
+    //         dbLoader.OnSubstationsLoaded += HandleSubstationsLoaded;
+    //     }
+    // }
 
-    public string FindNearbySubstations(float latitude, float longitude, float heading, string objectType)
+// private void HandleSubstationsLoaded(List<Substation> loadedSubstations)
+// {
+//     if (debugMode) Debug.Log("Firebase data ready! Running first detection...");
+
+//     FindNearbySubstations(currentLat, currentLon, currentHeading, "Power"); 
+// }
+
+    public string FindNearbySubstations(float latitude, float longitude, float heading, string objectType, List<Substation> substations) // 
     {
         // Return cached results if we have them
         if (hasFirstDetection && cachedResults != null)
@@ -79,7 +93,7 @@ public class DistanceMatching : MonoBehaviour
         // First detection - calculate everything
         List<MatchCandidate> candidates = new List<MatchCandidate>();
 
-        var substations = dbLoader.GetSubstations();
+        // var substations = dbLoader.GetSubstations();
         Debug.Log(substations.Count);
 
         foreach (var substation in substations)
@@ -88,8 +102,6 @@ public class DistanceMatching : MonoBehaviour
 
 
             if (substation.TR_TYPE != objectType) continue;
-            // Debug.Log($"HELP! objectType: {objectType}, TR_TYPE: {(string)substation.TR_TYPE}");
-
 
             try
             {
@@ -122,7 +134,8 @@ public class DistanceMatching : MonoBehaviour
         }
 
         // Sort by combined score of distance and angle
-        candidates.Sort((a, b) => {
+        candidates.Sort((a, b) =>
+        {
             float scoreA = a.GetScore(searchRadiusKm, angleWeight);
             float scoreB = b.GetScore(searchRadiusKm, angleWeight);
             return scoreA.CompareTo(scoreB);
@@ -131,9 +144,9 @@ public class DistanceMatching : MonoBehaviour
         // Store results and mark first detection as complete
         cachedResults = candidates;
         hasFirstDetection = true;
-        
+
         if (debugMode) Debug.Log("First detection completed and cached");
-        
+
         return FormatResults(candidates, false);
     }
 
@@ -165,7 +178,7 @@ public class DistanceMatching : MonoBehaviour
         return sb.ToString();
     }
 
-    private float Haversine(float lat1, float lon1, float lat2, float lon2)
+    public static float Haversine(float lat1, float lon1, float lat2, float lon2)
     {
         float lat1Rad = lat1 * Mathf.Deg2Rad;
         float lon1Rad = lon1 * Mathf.Deg2Rad;

@@ -5,11 +5,11 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadScanScene()
     {
-        SceneManager.LoadScene("Scan");
+        SceneManager.LoadScene("MainScene");
     }
     public void LoadMapScene()
     {
-        SceneManager.LoadScene("Homepage");
+        SceneManager.LoadScene("ZoomableMap");
     }
     
 
