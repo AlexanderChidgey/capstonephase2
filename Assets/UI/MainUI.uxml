@@ -1,15 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Template name="ScanDataOverlay" src="project://database/Assets/UI/ScanDataOverlay.uxml?fileID=9197481963319205126&amp;guid=795751dd3ab524f438c69ca4e09d05ed&amp;type=3#ScanDataOverlay" />
     <ui:Template name="TopNavBar" src="project://database/Assets/UI/TopNavBar.uxml?fileID=9197481963319205126&amp;guid=bf8962a9d7240954ca830036fd783c7a&amp;type=3#TopNavBar" />
+    <ui:Template name="ScanDataOverlay" src="project://database/Assets/UI/ScanDataOverlay.uxml?fileID=9197481963319205126&amp;guid=795751dd3ab524f438c69ca4e09d05ed&amp;type=3#ScanDataOverlay" />
     <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
     <ui:VisualElement name="SafeArea" style="flex-grow: 1; overflow: hidden; height: 3626px;">
         <ui:Button text="&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Circle_Btn" style="background-image: url(&quot;project://database/Assets/Images/Icons/CircleIcon.png?fileID=2800000&amp;guid=1a4c368932f721747a25c7283229f3bf&amp;type=3#CircleIcon&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(188, 188, 188, 0); margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 20%; height: 20%; align-items: auto; justify-content: center; align-self: center; position: absolute; bottom: 15%; top: auto; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
-        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: flex; visibility: visible; overflow: visible; position: absolute; right: -40px; bottom: 80px; top: -80px; opacity: 1; flex-shrink: 1; width: auto; flex-direction: column; flex-basis: auto; align-self: auto; flex-grow: 1; align-items: stretch; flex-wrap: nowrap;">
-            <ui:VisualElement name="EmptySpace" style="flex-grow: 0; flex-basis: 20%; display: flex; visibility: visible;" />
-            <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 100%; flex-direction: column; flex-shrink: 1; position: relative; width: 1360px; align-items: stretch;">
-                <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex;" />
-            </ui:VisualElement>
-        </ui:ScrollView>
         <ui:VisualElement name="TopNavBarCanvas" style="flex-grow: 0; flex-basis: 12.5%;">
             <ui:Instance template="TopNavBar" name="TopNavBar" style="flex-basis: 100%;" />
         </ui:VisualElement>
@@ -27,6 +21,11 @@
                 <ui:Label tabindex="-1" text="Yolo" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Detection3Id" style="-unity-text-align: middle-left; font-size: 30px; display: flex;" />
             </ui:Button>
         </ui:VisualElement>
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: flex; visibility: visible; overflow: visible; position: relative; right: auto; bottom: auto; top: auto; opacity: 1; flex-shrink: 1; width: auto; flex-direction: column; flex-basis: auto; align-self: auto; flex-grow: 1; align-items: stretch; flex-wrap: nowrap;">
+            <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 100%; flex-direction: column; flex-shrink: 1; position: relative; width: auto; align-items: stretch; align-self: auto; justify-content: flex-start;">
+                <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex; justify-content: flex-start; align-items: stretch; align-self: auto; position: relative;" />
+            </ui:VisualElement>
+        </ui:ScrollView>
         <ui:VisualElement name="BottomNavBarCanvas" style="flex-grow: 0; flex-basis: 10%; flex-direction: row; flex-shrink: 1; position: absolute; justify-content: space-around; align-self: auto; padding-top: 5%; padding-bottom: 5%; padding-right: 5%; padding-left: 5%; background-color: rgb(53, 124, 131); flex-wrap: nowrap; min-width: 100px; min-height: 250px; bottom: 0; right: 0; top: auto; left: 0; height: 250px;">
             <ui:Button text="&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Scan_Btn" class="botNavBtn nav-button-icon" style="background-image: none; background-color: rgba(188, 188, 188, 0); flex-grow: 1; flex-shrink: 0; justify-content: flex-start; margin-top: 0; margin-right: 7.5%; margin-bottom: 0; margin-left: 7.5%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; max-width: none; min-width: 32px; min-height: 32px; border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
                 <ui:VisualElement name="CameraIcon" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Images/Icons/CameraIcon_128x128.png?fileID=2800000&amp;guid=8c76519626738456b83c8ddad85cb603&amp;type=3#CameraIcon_128x128&quot;);" />
