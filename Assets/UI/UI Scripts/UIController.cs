@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System.Linq;
+using System.Globalization;
 
 [RequireComponent(typeof(UIDocument))]
 public class UIController : MonoBehaviour
@@ -14,6 +16,8 @@ public class UIController : MonoBehaviour
     [SerializeField] private string resultsContainerName = "DetectionResultsContainer";
     [SerializeField] private string mapButtonName = "Map_Btn";
 
+    [SerializeField] private DBLoader dbLoader;
+    
     private UIDocument uiDocument;
     private VisualElement root;
     
@@ -33,6 +37,30 @@ public class UIController : MonoBehaviour
 
     private List<ObjectDetectionHandler.MatchInfo> currentMatches;
     private bool isOverlayVisible = true;
+
+    // Technical data labels inside the technical scan overlay
+    [SerializeField] private string overlayRootName = "ScanDataOverlay";
+    [SerializeField] private string serialNumberLabel = "SerialNumber_Label";
+    [SerializeField] private string modelNumberLabel = "ModelNumber_Label";
+    [SerializeField] private string numberOfPhasesLabel = "NumberOfPhases_Label";
+    [SerializeField] private string voltageLabel = "Voltage_Label";
+    [SerializeField] private string lastServiceDateLabel = "LastServiceDate_Label";
+    [SerializeField] private string nextServiceDateLabel = "NextServiceDate_Label";
+
+    [SerializeField] private string addressLabel = "Address_Label";
+    [SerializeField] private string latLabel = "Lat_Label";
+    [SerializeField] private string lonLabel = "Lon_Label";
+
+    private VisualElement overlayRoot;
+    private Label serialNumber;
+    private Label modelNumber;
+    private Label numberOfPhases;
+    private Label voltage;
+    private Label lastServiceDate;
+    private Label nextServiceDate;
+    private Label address;
+    private Label lat;
+    private Label lon;
 
     private void Awake()
     {
@@ -58,7 +86,19 @@ public class UIController : MonoBehaviour
         scrollView = root.Q<VisualElement>(scrollViewName);
         mapButton = root.Q<Button>(mapButtonName);
 
-        resultsContainer = root.Q<VisualElement>(resultsContainerName);
+        resultsContainer = scrollView.Q<VisualElement>(resultsContainerName);
+
+        overlayRoot = scrollView.Q<VisualElement>(overlayRootName);
+        serialNumber = scrollView.Q<Label>(serialNumberLabel);
+        modelNumber = scrollView.Q<Label>(modelNumberLabel);
+        numberOfPhases = scrollView.Q<Label>(numberOfPhasesLabel);
+        voltage = scrollView.Q<Label>(voltageLabel);
+        lastServiceDate = scrollView.Q<Label>(lastServiceDateLabel);
+        nextServiceDate = scrollView.Q<Label>(nextServiceDateLabel);
+
+        address = scrollView.Q<Label>(addressLabel);
+        lat = scrollView.Q<Label>(latLabel);
+        lon = scrollView.Q<Label>(lonLabel);
 
         if (circleButton != null)
         {
@@ -282,6 +322,7 @@ public class UIController : MonoBehaviour
         if (canAccessMatch)
         {
             ObjectDetectionHandler.MatchInfo match = currentMatches[i];
+            PopulateTechnicalPanel(match);
             if (match == null)
             {
                 Debug.LogWarning("Match at index " + i.ToString() + " is null.");
@@ -311,6 +352,55 @@ public class UIController : MonoBehaviour
         ShowOverlay();
     }
 
+    private Substation FindSubstationById(string id)
+    {
+        if (string.IsNullOrEmpty(id) || dbLoader == null) return null;
+
+        List<Substation> list = dbLoader.GetSubstations(); 
+        return list.FirstOrDefault(s =>
+            string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static void SetLabel(Label target, string value)
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(value))
+        {
+            target.text = "-";
+        }
+        else
+        {
+            target.text = value;
+        }
+    }
+
+    private void PopulateTechnicalPanel(ObjectDetectionHandler.MatchInfo match)
+    {
+        if (overlayRoot == null)
+        {
+            Debug.LogWarning("ScanDataOverlay root not found. Did not populate technical panel.");
+            return;
+        }
+
+        string id = match?.ID;
+
+        Substation sub = FindSubstationById(id);
+
+        SetLabel(serialNumber, sub?.SERIAL_NUMBER);
+        SetLabel(modelNumber, sub?.MODEL_NUMBER);
+        SetLabel(numberOfPhases, sub?.NUMBER_OF_PHASES);
+        SetLabel(voltage, sub?.MAX_VOLT);
+        SetLabel(lastServiceDate, sub?.LAST_SERVICE_DATE);
+        SetLabel(nextServiceDate, sub?.NEXT_SERVICE_DATE);
+
+        SetLabel(address, sub?.ADDRESS);
+        SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
+        SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+    }
 }
 
 

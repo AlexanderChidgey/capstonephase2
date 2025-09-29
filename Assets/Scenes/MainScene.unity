@@ -698,6 +698,14 @@ MonoBehaviour:
   scrollViewName: ScanDataScrollView
   resultsContainerName: DetectionResultsContainer
   mapButtonName: Map_Btn
+  dbLoader: {fileID: 59296995}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
 --- !u!1 &942771956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1043,14 @@ MonoBehaviour:
   scrollViewName: ScanDataScrollView
   resultsContainerName: DetectionResultsContainer
   mapButtonName: Map_Btn
+  dbLoader: {fileID: 0}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
 --- !u!114 &1340760358
 MonoBehaviour:
   m_ObjectHideFlags: 0

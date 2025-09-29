@@ -21,6 +21,13 @@ public class Substation
     public double LON;
     public double LAT;
     public string REFRESH_DT;
+
+    public string SERIAL_NUMBER;
+    public string MODEL_NUMBER;
+    public string NUMBER_OF_PHASES;
+    public string LAST_SERVICE_DATE;
+    public string NEXT_SERVICE_DATE;
+    public string ADDRESS;
 }
 
 
