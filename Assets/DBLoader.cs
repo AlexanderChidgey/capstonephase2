@@ -67,6 +67,11 @@ public class DBLoader : MonoBehaviour
 
     void Awake()
     {
+    #if UNITY_EDITOR
+            Debug.Log("Detected using Unity Editor...");
+            LoadSubstationsFromResources();
+            return;
+    #else
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Result != DependencyStatus.Available)
@@ -75,7 +80,7 @@ public class DBLoader : MonoBehaviour
                 return;
             }
 
-            // ✅ Initialize default Firebase app
+            // Initialise default Firebase app
             AppOptions options = new AppOptions
             {
                 ApiKey = "AIzaSyBzQG8CuZM34Ktj36w4-bY8IFmWTQsyDk",
@@ -92,6 +97,7 @@ public class DBLoader : MonoBehaviour
             // LoadDatabaseFromFirebase();
             LoadSubstationsFromJson();
         });
+    #endif
     }
 
     public event Action<List<Substation>> OnSubstationsLoaded;
@@ -173,6 +179,47 @@ public class DBLoader : MonoBehaviour
         else
         {
             displayText.text = $"System ID '{systemId}' not found.";
+        }
+    }
+
+    public void LoadSubstationsFromResources()
+    {
+        TextAsset jsonFile = Resources.Load<TextAsset>("DistSubstations");
+        if (jsonFile == null)
+        {
+            Debug.LogError("DistSubstations.json not found in Resources folder.");
+            return;
+        }
+
+        try
+        {
+            List<Substation> parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Substation>>(jsonFile.text);
+            if (parsed == null)
+            {
+                parsed = new List<Substation>();
+            }
+
+            substations = parsed;
+            IsLoaded = true;
+
+            Debug.Log("Loaded " + substations.Count + " substations from Resources.");
+
+            if (OnSubstationsLoaded != null)
+            {
+                OnSubstationsLoaded(substations);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to parse DistSubstations.json: " + e.Message);
+
+            substations = new List<Substation>();
+            IsLoaded = true;
+
+            if (OnSubstationsLoaded != null)
+            {
+                OnSubstationsLoaded(substations);
+            }
         }
     }
 }

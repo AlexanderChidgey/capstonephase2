@@ -25,7 +25,7 @@ public class ObjectDetectionHandler : MonoBehaviour
     public TMP_Text detectionText;
     public TMP_Text[] matchTexts;
     public TMP_Text[] matchIds;
-    public GameObject[] matchInfoPanel;
+    private VisualElement[] matchInfoPanel;
     private DistanceMatching distanceMatching;
     private UIController uiController;
     public DBLoader dbLoader;
@@ -42,23 +42,25 @@ public class ObjectDetectionHandler : MonoBehaviour
             if (uiController == null)
                 Debug.LogWarning("UIController component not found on UIDocument GameObject.");
         }
-        else
-        {
-            Debug.LogWarning("UIDocument GameObject not found.");
-        }
+        var uiDoc = uiDocumentGO.GetComponent<UIDocument>();
 
-        if (matchInfoPanel != null)
+        if (uiDoc != null)
         {
+            var root = uiDoc.rootVisualElement;
+
+            matchInfoPanel = new VisualElement[]
+            {
+                root.Q<VisualElement>("MatchInfoPanel1"),
+                root.Q<VisualElement>("MatchInfoPanel2"),
+                root.Q<VisualElement>("MatchInfoPanel3")
+            };
+
             foreach (var panel in matchInfoPanel)
             {
                 if (panel != null)
-                {
-                    panel.SetActive(false);
-                }
+                    panel.style.display = DisplayStyle.None;
                 else
-                {
                     Debug.LogWarning("One of the matchInfoPanel entries is null!");
-                }
             }
         }
 
@@ -95,6 +97,21 @@ public class ObjectDetectionHandler : MonoBehaviour
 
             Debug.Log($"Loaded {substations.Count} substation data successfully");
         }
+        else
+        {
+            Debug.Log($"ERROR: Substations is null!");
+        }
+        #if UNITY_EDITOR
+            // Mock coordinates (Brisbane CBD) for testing in the simulator
+            float latitude = -27.4698f;
+            float longitude = 153.0251f;
+            float heading = 90f;
+            int classId = 0;
+        
+            HandleDetection(classId, latitude, longitude, heading);
+            Debug.Log($"Class ID: {classId}, Latitude: {latitude}, Longitude: {longitude}, Heading: {heading}");
+                
+        #endif
     }
     public class MatchInfo
     {
@@ -148,7 +165,6 @@ public class ObjectDetectionHandler : MonoBehaviour
 
     public void HandleDetection(int classId, float latitude, float longitude, float heading)
     {
-
         if (cachedSubstations == null)
         {
             Debug.Log("Data not loaded Yet");

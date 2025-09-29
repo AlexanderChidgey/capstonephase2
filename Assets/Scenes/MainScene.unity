@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: {fileID: 0}
   systemIdToLoad: 0
+  geoConverter: {fileID: 0}
 --- !u!4 &59296996
 Transform:
   m_ObjectHideFlags: 0
@@ -663,7 +664,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815926967}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0a72dc39cdbc7ea41a9e2a6a32f89325, type: 3}
   m_Name: 
@@ -1083,7 +1084,6 @@ MonoBehaviour:
   detectionText: {fileID: 0}
   matchTexts: []
   matchIds: []
-  matchInfoPanel: []
   dbLoader: {fileID: 0}
 --- !u!4 &1689922334
 Transform:
@@ -1244,11 +1244,7 @@ MonoBehaviour:
   detectionText: {fileID: 0}
   matchTexts: []
   matchIds: []
-  matchInfoPanel:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  dbLoader: {fileID: 0}
+  dbLoader: {fileID: 59296995}
 --- !u!4 &2063161667
 Transform:
   m_ObjectHideFlags: 0

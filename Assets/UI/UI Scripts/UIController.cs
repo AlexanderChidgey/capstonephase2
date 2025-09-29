@@ -111,12 +111,11 @@ public class UIController : MonoBehaviour
             {
                 detectionNameLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Label");
                 detectionIdLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Id");
+                Debug.Log($"Detection button {i + 1} found: {detectionButtons[i].name}");
             }
-            // else
-            // {
-            //     Debug.LogWarning("'" + buttonName + "' not found in UI.");
-            //     continue;
-            // }
+            else {
+                Debug.LogWarning($"Detection button {i + 1} not found in UXML.");
+            }
         }
     }
 
@@ -208,8 +207,9 @@ public class UIController : MonoBehaviour
     public void UpdateDetectionUI(List<ObjectDetectionHandler.MatchInfo> matches)
 {
     currentMatches = matches ?? new List<ObjectDetectionHandler.MatchInfo>();
+    Debug.Log("UpdateDetectionUI called with " + (matches?.Count ?? 0) + " matches.");
 
-    for (int i = 0; i < detectionButtons.Length; i++)
+        for (int i = 0; i < detectionButtons.Length; i++)
     {
         if (detectionButtons[i] == null) continue;
 

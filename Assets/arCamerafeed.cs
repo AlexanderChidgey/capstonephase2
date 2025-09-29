@@ -50,8 +50,7 @@ public class CaptureAndRunYOLO : MonoBehaviour
 
         if (Input.location.status != LocationServiceStatus.Running)
         {
-            Debug.LogError("Unable to start location services.");
-            yield break;
+            Debug.LogWarning("Location services is not running - assuming using Unity Editor. Continuing with mock coordinates.");
         }
 
         while (!dbLoader.IsLoaded)
