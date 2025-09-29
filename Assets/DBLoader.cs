@@ -93,9 +93,7 @@ public class DBLoader : MonoBehaviour
             {
                 FirebaseApp.Create(options);
             }
-
-            // LoadDatabaseFromFirebase();
-            LoadSubstationsFromJson();
+            LoadDatabaseFromFirebase();
         });
     #endif
     }
