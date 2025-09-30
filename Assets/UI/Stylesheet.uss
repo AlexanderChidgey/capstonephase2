@@ -150,3 +150,15 @@
 .high-z-index {
     z-index:10;
 }
+
+Button:hover {
+ scale: 1.025;
+}
+
+Button:active {
+ scale: 0.975;
+}
+
+Button {
+ transition: 0.1s;
+}
