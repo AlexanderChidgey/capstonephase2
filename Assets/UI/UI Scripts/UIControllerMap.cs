@@ -10,12 +10,14 @@ public class UIControllerMap : MonoBehaviour
     [Header("UXML Element Names")]
     [SerializeField] private string mapButtonName = "Map_Btn";
     [SerializeField] private string scanButtonName = "Scan_Btn";
+    [SerializeField] private string historyButtonName = "History_Btn";
 
     private UIDocument uiDocument;
     private VisualElement root;
 
     private Button mapButton;
     private Button scanButton;
+    private Button historyButton;
     private VisualElement resultsContainer;
 
     private Button circleButton;
@@ -43,6 +45,7 @@ public class UIControllerMap : MonoBehaviour
 
         mapButton = root.Q<Button>(mapButtonName);
         scanButton = root.Q<Button>(scanButtonName);
+        historyButton = root.Q<Button>(historyButtonName);
 
         if (mapButton != null)
         {
@@ -53,9 +56,6 @@ public class UIControllerMap : MonoBehaviour
         {
             Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
         }
-
-
-
         if (scanButton != null)
         {
             scanButton.clicked += OnScanButtonClicked;
@@ -64,6 +64,15 @@ public class UIControllerMap : MonoBehaviour
         else
         {
             Debug.LogWarning("Button '" + scanButtonName + "' not found in UI.");
+        }
+        if (historyButton != null)
+        {
+            historyButton.clicked += OnHistoryButtonClicked;
+            Debug.Log("Map button registered");
+        }
+        else
+        {
+            Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
         }
     }
 
@@ -76,6 +85,10 @@ public class UIControllerMap : MonoBehaviour
         if (scanButton != null)
         {
             scanButton.clicked -= OnScanButtonClicked;
+        }
+        if (historyButton != null)
+        {
+            historyButton.clicked -= OnHistoryButtonClicked;
         }
     }
     private void OnMapButtonClicked()
@@ -90,6 +103,11 @@ public class UIControllerMap : MonoBehaviour
         string sceneName = "MainScene";
         SceneManager.LoadScene(sceneName);
     }
-    
+    private void OnHistoryButtonClicked()
+    {
+        string sceneName = "HistoryLog";
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
 }
 

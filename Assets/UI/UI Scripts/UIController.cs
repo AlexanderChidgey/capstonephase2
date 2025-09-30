@@ -25,6 +25,7 @@ public class UIController : MonoBehaviour
 
     private VisualElement scrollView;
     private Button mapButton;
+    private Button historyButton;
     private VisualElement resultsContainer;
 
     private Button circleButton;
@@ -146,7 +147,7 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
         }
-
+        
 
 
         if (backButton != null)
@@ -245,8 +246,7 @@ public class UIController : MonoBehaviour
         Debug.Log("Loading scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
     }
-
-
+    
     private void OnBackButtonClicked()
     {
         HideOverlay();
@@ -359,6 +359,7 @@ public class UIController : MonoBehaviour
         {
             ObjectDetectionHandler.MatchInfo match = currentMatches[i];
             PopulateTechnicalPanel(match);
+            StoreScanHistory(match);
             if (match == null)
             {
                 Debug.LogWarning("Match at index " + i.ToString() + " is null.");
@@ -435,6 +436,22 @@ public class UIController : MonoBehaviour
         SetLabel(address, sub?.ADDRESS);
         SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
         SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+
+    }
+
+    private void StoreScanHistory(ObjectDetectionHandler.MatchInfo match)
+    {
+        string id = match?.ID;
+
+        Substation sub = FindSubstationById(id);
+
+        HistoryStoreScan.Add(
+            id: match.ID,
+            objectType: sub?.TR_TYPE,
+            serialNumber: sub?.SERIAL_NUMBER,
+            model: sub?.MODEL_NUMBER,
+            voltage: sub?.MAX_VOLT
+        );
     }
 
     private void HookCopy(Button btn, Label source, string friendlyName)
