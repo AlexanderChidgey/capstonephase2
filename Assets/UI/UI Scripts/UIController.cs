@@ -86,7 +86,7 @@ public class UIController : MonoBehaviour
         scrollView = root.Q<VisualElement>(scrollViewName);
         mapButton = root.Q<Button>(mapButtonName);
 
-        resultsContainer = scrollView.Q<VisualElement>(resultsContainerName);
+        resultsContainer = root.Q<VisualElement>(resultsContainerName);
 
         overlayRoot = scrollView.Q<VisualElement>(overlayRootName);
         serialNumber = scrollView.Q<Label>(serialNumberLabel);
@@ -348,7 +348,6 @@ public class UIController : MonoBehaviour
                 }
             }
         }
-        //for now, overlay of electrical object data will always be visible (even if data is invalid or missing)!! 
         ShowOverlay();
     }
 
