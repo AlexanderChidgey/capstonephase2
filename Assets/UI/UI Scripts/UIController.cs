@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using System.Linq;
 using System.Globalization;
+using UnityEngine.WSA;
 
 [RequireComponent(typeof(UIDocument))]
 public class UIController : MonoBehaviour
@@ -38,7 +39,7 @@ public class UIController : MonoBehaviour
     private List<ObjectDetectionHandler.MatchInfo> currentMatches;
     private bool isOverlayVisible = true;
 
-    // Technical data labels inside the technical scan overlay
+    [Header("Technical data labels inside the technical scan overlay")]
     [SerializeField] private string overlayRootName = "ScanDataOverlay";
     [SerializeField] private string serialNumberLabel = "SerialNumber_Label";
     [SerializeField] private string modelNumberLabel = "ModelNumber_Label";
@@ -51,6 +52,9 @@ public class UIController : MonoBehaviour
     [SerializeField] private string latLabel = "Lat_Label";
     [SerializeField] private string lonLabel = "Lon_Label";
 
+    [Header("Manager Scripts")]
+    [SerializeField] private ToastManager toast;
+
     private VisualElement overlayRoot;
     private Label serialNumber;
     private Label modelNumber;
@@ -62,6 +66,14 @@ public class UIController : MonoBehaviour
     private Label lat;
     private Label lon;
 
+    private Button serialNumberBtn;
+    private Button modelNumberBtn;
+    private Button numberOfPhasesBtn;
+    private Button voltageBtn;
+    private Button lastServiceDateBtn;
+    private Button nextServiceDateBtn;
+    private Button addressBtn;
+    
     private void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -99,6 +111,22 @@ public class UIController : MonoBehaviour
         address = scrollView.Q<Label>(addressLabel);
         lat = scrollView.Q<Label>(latLabel);
         lon = scrollView.Q<Label>(lonLabel);
+
+        serialNumberBtn = root.Q<Button>("SerialNumber_Btn");
+        modelNumberBtn = root.Q<Button>("ModelNumber_Btn");
+        numberOfPhasesBtn = root.Q<Button>("NumberOfPhases_Btn");
+        voltageBtn = root.Q<Button>("Voltage_Btn");
+        lastServiceDateBtn = root.Q<Button>("LastServiceDate_Btn");
+        nextServiceDateBtn = root.Q<Button>("NextServiceDate_Btn");
+        addressBtn = root.Q<Button>("Address_Btn");
+
+        HookCopy(serialNumberBtn, serialNumber, "Serial Number");
+        HookCopy(modelNumberBtn, modelNumber, "Model Number");
+        HookCopy(numberOfPhasesBtn, numberOfPhases, "Number of Phases");
+        HookCopy(voltageBtn, voltage, "Voltage");
+        HookCopy(lastServiceDateBtn, lastServiceDate, "Last Service Date");
+        HookCopy(nextServiceDateBtn, nextServiceDate, "Next Service Date");
+        HookCopy(addressBtn, address, "Address");
 
         if (circleButton != null)
         {
@@ -181,6 +209,14 @@ public class UIController : MonoBehaviour
                 detectionButtons[i].clicked -= detectionHandlers[i];
             }
         }
+
+        UnhookCopy(serialNumberBtn);
+        UnhookCopy(modelNumberBtn);
+        UnhookCopy(numberOfPhasesBtn);
+        UnhookCopy(voltageBtn);
+        UnhookCopy(lastServiceDateBtn);
+        UnhookCopy(nextServiceDateBtn);
+        UnhookCopy(addressBtn);
     }
 
     private void OnCircleButtonClicked()
@@ -399,6 +435,31 @@ public class UIController : MonoBehaviour
         SetLabel(address, sub?.ADDRESS);
         SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
         SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+    }
+
+    private void HookCopy(Button btn, Label source, string friendlyName)
+    {
+        if (btn == null || source == null) return;
+
+        Action handler = () =>
+        {
+            string text = string.IsNullOrEmpty(source.text) ? "-" : source.text;
+            GUIUtility.systemCopyBuffer = text;
+            if (toast != null) toast.Show($"{friendlyName} copied");
+            else Debug.Log($"{friendlyName} copied: {text}");
+        };
+
+        btn.clicked += handler;
+        btn.userData = handler;
+    }
+
+    private void UnhookCopy(Button btn)
+    {
+        if (btn?.userData is Action handler)
+        {
+            btn.clicked -= handler;
+            btn.userData = null;
+        }
     }
 }
 
