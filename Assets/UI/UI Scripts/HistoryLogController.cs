@@ -17,7 +17,12 @@ public class HistoryLogController : MonoBehaviour
         VisualElement listContainer = historyRoot?.Q<VisualElement>(listName);
         _scroll = listContainer?.Q<ScrollView>() ?? root.Q<ScrollView>(listName);
 
-        if (_scroll == null) { Debug.LogError("HistoryList ScrollView not found."); return; }
+        if (_scroll == null) {
+            Debug.LogError("HistoryList ScrollView not found."); 
+            return; 
+        }
+        _scroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
+        _scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
         Refresh();
     }
 
