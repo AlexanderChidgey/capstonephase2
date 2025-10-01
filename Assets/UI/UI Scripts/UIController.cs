@@ -174,6 +174,15 @@ public class UIController : MonoBehaviour
             Debug.LogWarning("Button '" + backButtonName + "' not found in UI.");
         }
 
+        if (StoreSelectedScan.ShowOverlayNextScene && !string.IsNullOrEmpty(StoreSelectedScan.Id))
+        {
+            ShowOverlayForHistoryId(StoreSelectedScan.Id);
+            StoreSelectedScan.ShowOverlayNextScene = false;
+        }
+
+        else
+        {
+
         if (scrollView != null)
         {
             scrollView.style.display = DisplayStyle.None;
@@ -199,6 +208,7 @@ public class UIController : MonoBehaviour
             else {
                 Debug.LogWarning($"Detection button {i + 1} not found in UXML.");
             }
+        }
         }
     }
 
@@ -606,6 +616,43 @@ public class UIController : MonoBehaviour
 
         return sb.ToString();
     }
+
+    public void ShowOverlayForHistoryId(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            ShowToast("Unable to show scan information.");
+            return;
+        }
+
+        var sub = FindSubstationById(id);
+
+        SetLabel(serialNumber, sub?.SERIAL_NUMBER);
+        SetLabel(modelNumber, sub?.MODEL_NUMBER);
+        SetLabel(numberOfPhases, sub?.NUMBER_OF_PHASES);
+        SetLabel(voltage, sub?.MAX_VOLT);
+        SetLabel(lastServiceDate, sub?.LAST_SERVICE_DATE);
+        SetLabel(nextServiceDate, sub?.NEXT_SERVICE_DATE);
+        SetLabel(address, sub?.ADDRESS);
+
+        if (sub != null)
+        {
+            SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
+            SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+            DetectionDataStore.SelectedId = sub.SYSTEM_ID;
+            DetectionDataStore.SelectedName = sub.SITE_DESC;
+        }
+        else
+        {
+            SetLabel(lat, "-");
+            SetLabel(lon, "-");
+            DetectionDataStore.SelectedId = id;
+            DetectionDataStore.SelectedName = "-";
+        }
+
+        ShowOverlay();
+    }
+
 }
 
 

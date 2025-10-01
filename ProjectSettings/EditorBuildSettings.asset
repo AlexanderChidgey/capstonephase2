@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HistoryLog.unity
     guid: 60f232a49ab87f440a1ee4eeccc83146
+  - enabled: 1
+    path: Assets/Scenes/ScannedObjectInfoScene.unity
+    guid: e4fbfccb51804304e9059d25d857d70d
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}

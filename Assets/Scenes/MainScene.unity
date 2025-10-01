@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &650687280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -729,6 +729,8 @@ MonoBehaviour:
   latLabel: Lat_Label
   lonLabel: Lon_Label
   toast: {fileID: 1454950395}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
 --- !u!114 &815926973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1095,8 @@ MonoBehaviour:
   latLabel: Lat_Label
   lonLabel: Lon_Label
   toast: {fileID: 0}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
 --- !u!114 &1340760358
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using System.Text;
 using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class HistoryLogController : MonoBehaviour
 {
@@ -158,7 +159,16 @@ public class HistoryLogController : MonoBehaviour
         btn.Add(modelRow);
         btn.Add(voltRow);
 
-        btn.clicked += () => Debug.Log("[HistoryUI] Clicked " + r.Id);
+        btn.clicked += () =>
+        {
+            Debug.Log("[HistoryUI] Clicked " + r.Id);
+
+            StoreSelectedScan.Id = r.Id;
+            StoreSelectedScan.Utc = r.Utc;
+            StoreSelectedScan.ShowOverlayNextScene = true;
+
+            SceneManager.LoadScene("ScannedObjectInfoScene");
+        };
 
         return btn;
     }
@@ -240,7 +250,7 @@ public class HistoryLogController : MonoBehaviour
 
         if (onClicked != null)
             btn.clicked += () => onClicked();
-
+            
         return btn;
     }
 
