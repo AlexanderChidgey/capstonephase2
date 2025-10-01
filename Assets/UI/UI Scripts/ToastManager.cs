@@ -6,23 +6,20 @@ using UnityEngine.UIElements;
 [DisallowMultipleComponent]
 public class ToastManager : MonoBehaviour
 {
-    [Header("UI Document")]
-    [SerializeField] private UIDocument uiDocument;
+    private UIDocument uiDocument;
 
-    [Header("Timing")]
-    [SerializeField] private float holdSeconds = 1.6f;
-    [SerializeField] private float fadeInSeconds = 0.16f;
-    [SerializeField] private float fadeOutSeconds = 0.22f;
+    private float holdSeconds = 1.6f;
+    private float fadeInSeconds = 0.16f;
+    private float fadeOutSeconds = 0.22f;
 
-    [Header("UI Styling and Layout")]
-    [SerializeField] private int fontSize = 16;
-    [SerializeField] private float minWidthPx = 260f;
-    [SerializeField] private float maxWidthPercent = 85f;
-    [SerializeField] private float hPad = 18f;
-    [SerializeField] private float vPad = 12f;
-    [SerializeField] private float cornerRadius = 14f;
-    [SerializeField] private float itemGap = 8f;
-    [SerializeField] private int maxVisible = 4;
+    private int fontSize = 45;
+    private float minWidthPx = 260f;
+    private float maxWidthPercent = 85f;
+    private float hPad = 18f;
+    private float vPad = 12f;
+    private float cornerRadius = 14f;
+    private float itemGap = 8f;
+    private int maxVisible = 4;
 
     private float verticalOffset = 0f;
 
