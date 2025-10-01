@@ -90,8 +90,7 @@ public static class CsvExporter
         List<Substation> list = db.GetSubstations();
         if (list == null) return null;
 
-        return list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase))
-            ?? list.FirstOrDefault(s => string.Equals(s.USER_REF_I, id, StringComparison.OrdinalIgnoreCase));
+        return list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
     }
 
     private static string FirstNonEmpty(string a, string b) => string.IsNullOrEmpty(a) ? (b ?? "") : a;

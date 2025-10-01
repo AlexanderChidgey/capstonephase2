@@ -56,6 +56,8 @@ public class UIController : MonoBehaviour
     [Header("Manager Scripts")]
     [SerializeField] private ToastManager toast;
 
+    [SerializeField] private string exportButtonName = "ExportAsCSV_Btn";
+
     private VisualElement overlayRoot;
     private Label serialNumber;
     private Label modelNumber;
@@ -129,6 +131,8 @@ public class UIController : MonoBehaviour
         HookCopy(nextServiceDateBtn, nextServiceDate, "Next Service Date");
         HookCopy(addressBtn, address, "Address");
 
+        Button exportBtn = root.Q<Button>(exportButtonName);
+
         if (circleButton != null)
         {
             circleButton.clicked += OnCircleButtonClicked;
@@ -147,7 +151,11 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
         }
-        
+        if (exportBtn != null)
+        {
+            exportBtn.clicked += OnExportCsvClicked;
+        }
+
 
 
         if (backButton != null)
@@ -478,6 +486,54 @@ public class UIController : MonoBehaviour
             btn.userData = null;
         }
     }
+
+    private void OnExportCsvClicked()
+    {
+        DBLoader db = dbLoader != null ? dbLoader : FindObjectOfType<DBLoader>();
+
+        GetScannedObjectInfo(db, out HistoryRecord record);
+
+        string path = CsvExporter.ExportOneCsv(in record, db);
+
+        ShowToast($"Exported CSV to:\n{path}");
+    }
+
+    private bool GetScannedObjectInfo(DBLoader db, out HistoryRecord record)
+    {
+        record = default;
+
+        string id = DetectionDataStore.SelectedId;
+
+        Substation sub = null;
+        if (db != null)
+        {
+            List<Substation> list = db.GetSubstations();
+            if (list != null)
+            {
+                sub = list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        record = new HistoryRecord
+        {
+            Id = sub?.SYSTEM_ID ?? id ?? name ?? "unknown",
+            ObjectType = sub?.TR_TYPE ?? "-",
+            SerialNumber = sub?.SERIAL_NUMBER ?? "-",
+            Model = sub?.MODEL_NUMBER ?? "-",
+            Voltage = sub?.MAX_VOLT ?? "-",
+            Utc = DateTime.UtcNow
+        };
+
+        return true;
+    }
+
+    private void ShowToast(string message)
+    {
+        ToastManager tm = FindObjectOfType<ToastManager>();
+        if (tm != null) tm.Show(message);
+        else Debug.Log($"{message}");
+    }
+
 }
 
 
