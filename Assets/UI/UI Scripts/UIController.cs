@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using System.Globalization;
 using UnityEngine.WSA;
+using System.Text;
 
 [RequireComponent(typeof(UIDocument))]
 public class UIController : MonoBehaviour
@@ -57,6 +58,7 @@ public class UIController : MonoBehaviour
     [SerializeField] private ToastManager toast;
 
     [SerializeField] private string exportButtonName = "ExportAsCSV_Btn";
+    [SerializeField] private string copyAllButtonName = "CopyAllData_Btn";
 
     private VisualElement overlayRoot;
     private Label serialNumber;
@@ -132,6 +134,7 @@ public class UIController : MonoBehaviour
         HookCopy(addressBtn, address, "Address");
 
         Button exportBtn = root.Q<Button>(exportButtonName);
+        Button copyAllBtn = root.Q<Button>(copyAllButtonName);
 
         if (circleButton != null)
         {
@@ -155,7 +158,10 @@ public class UIController : MonoBehaviour
         {
             exportBtn.clicked += OnExportCsvClicked;
         }
-
+        if (copyAllBtn != null)
+        {
+            copyAllBtn.clicked += OnCopyAllDataClicked;
+        }
 
 
         if (backButton != null)
@@ -534,6 +540,72 @@ public class UIController : MonoBehaviour
         else Debug.Log($"{message}");
     }
 
+    private void OnCopyAllDataClicked()
+    {
+        DBLoader db = dbLoader != null ? dbLoader : FindObjectOfType<DBLoader>();
+
+        GetCurrentSubstation(db, out Substation sub, out string fallbackId, out string fallbackName);
+
+        string payload = BuildCopyAllPayload(sub, fallbackId, fallbackName);
+        GUIUtility.systemCopyBuffer = payload;
+        ShowToast("Copied all data to clipboard.");
+    }
+
+    private bool GetCurrentSubstation(DBLoader db, out Substation sub, out string id, out string nameSel)
+    {
+        sub = null;
+
+        id = DetectionDataStore.SelectedId;
+        nameSel = DetectionDataStore.SelectedName;
+
+        string idKey = id;
+
+        if (db != null && !string.IsNullOrEmpty(idKey))
+        {
+            List<Substation> list = db.GetSubstations();
+            if (list != null)
+            {
+                sub = list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, idKey, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        return sub != null || !string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(nameSel);
+    }
+
+
+    private string BuildCopyAllPayload(Substation sub, string fallbackId, string fallbackName)
+    {
+        string F(string s) => string.IsNullOrEmpty(s) ? "-" : s;
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Exported (UTC): {DateTime.UtcNow:o}");
+        sb.AppendLine();
+
+        if (sub != null)
+        {
+            sb.AppendLine($"SYSTEM_ID: {F(sub.SYSTEM_ID)}");
+            sb.AppendLine($"USER_REF_I: {F(sub.USER_REF_I)}");
+            sb.AppendLine($"SITE_DESC: {F(sub.SITE_DESC)}");
+            sb.AppendLine($"TR_TYPE: {F(sub.TR_TYPE)}");
+            sb.AppendLine($"MAX_KVA: {F(sub.MAX_KVA)}");
+            sb.AppendLine($"MAX_VOLT: {F(sub.MAX_VOLT)}");
+            sb.AppendLine($"LON: {sub.LON}");
+            sb.AppendLine($"LAT: {sub.LAT}");
+            sb.AppendLine($"REFRESH_DT: {F(sub.REFRESH_DT)}");
+            sb.AppendLine($"SERIAL_NUMBER: {F(sub.SERIAL_NUMBER)}");
+            sb.AppendLine($"MODEL_NUMBER: {F(sub.MODEL_NUMBER)}");
+            sb.AppendLine($"NUMBER_OF_PHASES: {F(sub.NUMBER_OF_PHASES)}");
+            sb.AppendLine($"LAST_SERVICE_DATE: {F(sub.LAST_SERVICE_DATE)}");
+            sb.AppendLine($"NEXT_SERVICE_DATE: {F(sub.NEXT_SERVICE_DATE)}");
+            sb.AppendLine($"ADDRESS: {F(sub.ADDRESS)}");
+        }
+        else
+        {
+            ShowToast("Unable to copy technical data");
+        }
+
+        return sb.ToString();
+    }
 }
 
 
