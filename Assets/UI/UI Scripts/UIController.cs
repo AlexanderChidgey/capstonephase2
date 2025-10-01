@@ -78,7 +78,11 @@ public class UIController : MonoBehaviour
     private Button lastServiceDateBtn;
     private Button nextServiceDateBtn;
     private Button addressBtn;
-    
+
+    [Header("Scene Names")]
+    [SerializeField] private string scannedObjectInfoSceneName = "ScannedObjectInfoScene";
+    [SerializeField] private string historySceneName = "HistoryLogScene";
+
     private void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
@@ -270,11 +274,29 @@ public class UIController : MonoBehaviour
         Debug.Log("Loading scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
     }
-    
+
     private void OnBackButtonClicked()
     {
+        string current = SceneManager.GetActiveScene().name;
+
+        if (!string.IsNullOrEmpty(scannedObjectInfoSceneName) &&
+            string.Equals(current, scannedObjectInfoSceneName))
+        {
+            if (!string.IsNullOrEmpty(historySceneName))
+            {
+                Debug.Log("Returning to History scene: " + historySceneName);
+                SceneManager.LoadScene(historySceneName);
+                return;
+            }
+            else
+            {
+                Debug.LogWarning("Back: historySceneName is not set.");
+            }
+        }
+
         HideOverlay();
     }
+
 
     public void ShowOverlay()
     {

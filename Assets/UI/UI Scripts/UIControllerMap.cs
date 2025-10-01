@@ -105,7 +105,7 @@ public class UIControllerMap : MonoBehaviour
     }
     private void OnHistoryButtonClicked()
     {
-        string sceneName = "HistoryLog";
+        string sceneName = "HistoryLogScene";
         Debug.Log("Loading scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
     }
