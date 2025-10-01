@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[DisallowMultipleComponent]
 public class ToastManager : MonoBehaviour
 {
     private UIDocument uiDocument;

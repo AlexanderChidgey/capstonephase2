@@ -66,11 +66,14 @@ public class HistoryLogController : MonoBehaviour
 
         Button exportBtn = BuildExportCsvButton(() =>
         {
+            // EXPORT SCAN INFO TO CSV:
             string path = CsvExporter.ExportOneCsv(r, db);
+            NotifyExport(path);
         });
 
         Button deleteBtn = BuildDeleteButton(() =>
         {
+            // DELETE SCAN:
             DeleteHistoryRecord(r);
         });
 
@@ -203,7 +206,7 @@ public class HistoryLogController : MonoBehaviour
 
     private Button BuildDeleteButton(System.Action onClicked)
     {
-        var btn = new Button();
+        Button btn = new Button();
         btn.name = "DeleteHistory_Btn";
         btn.AddToClassList("danger-button");
         btn.AddToClassList("secondary-button");
@@ -228,7 +231,7 @@ public class HistoryLogController : MonoBehaviour
             Debug.LogWarning("Trash icon not found at Resources/Images/Icons/Trash_Icon");
         }
 
-        var label = new Label("Delete");
+        Label label = new Label("Delete");
         label.name = "Delete_Label";
         label.style.unityTextAlign = TextAnchor.MiddleCenter;
 
@@ -249,12 +252,12 @@ public class HistoryLogController : MonoBehaviour
 
         if (removed)
         {
-            ShowToast("Deleted from history.");
+            ShowToast("Deleted from history");
             Refresh();
         }
         else
         {
-            ShowToast("Could not delete this item.");
+            ShowToast("Could not delete this item");
         }
     }
 
@@ -272,5 +275,10 @@ public class HistoryLogController : MonoBehaviour
         ToastManager tm = FindObjectOfType<ToastManager>();
         if (tm != null) tm.Show(message);
         else Debug.Log($"{message}");
+    }
+
+    private void NotifyExport(string path)
+    {
+        ShowToast($"Exported CSV to:\n{path}\n");
     }
 }
