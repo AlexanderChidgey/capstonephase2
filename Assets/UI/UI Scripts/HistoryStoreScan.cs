@@ -39,4 +39,18 @@ public static class HistoryStoreScan
 
     public static IReadOnlyList<HistoryRecord> All => items;
     public static void Clear() => items.Clear();
+    public static bool RemoveById(string id)
+    {
+        if (string.IsNullOrEmpty(id)) return false;
+        List<HistoryRecord> list = items;
+        int i = list.FindIndex(x => string.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase));
+        if (i >= 0)
+        {
+            list.RemoveAt(i);
+            Debug.Log($"[History] removed {id}");
+            return true;
+        }
+        return false;
+    }
+
 }

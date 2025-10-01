@@ -169,6 +169,62 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &672466365
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672466367}
+  - component: {fileID: 672466366}
+  m_Layer: 0
+  m_Name: ToastManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &672466366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672466365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36b3d7017954434da9069479d78565b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiDocument: {fileID: 0}
+  holdSeconds: 1.6
+  fadeInSeconds: 0.16
+  fadeOutSeconds: 0.22
+  fontSize: 16
+  minWidthPx: 260
+  maxWidthPercent: 85
+  hPad: 18
+  vPad: 12
+  cornerRadius: 14
+  itemGap: 8
+  maxVisible: 4
+--- !u!4 &672466367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672466365}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &898564065
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +440,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce75d77de0d073c4a90dcd7aae87f4b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootName: HistoryRoot
   listName: HistoryList
-  buttonClass: data-button
+  toast: {fileID: 672466366}
 --- !u!1 &1362782529
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,3 +569,4 @@ SceneRoots:
   - {fileID: 1362782531}
   - {fileID: 1187461726}
   - {fileID: 461122929}
+  - {fileID: 672466367}

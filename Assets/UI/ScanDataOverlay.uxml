@@ -79,7 +79,7 @@
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExportAsCSV_Btn" class="data-button secondary-button">
                         <ui:Label tabindex="-1" text="Export as CSV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExportAsCSV_Label" style="-unity-text-align: middle-center;" />
-                        <ui:VisualElement name="CSV_Icon" class="button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/Frame.png?fileID=2800000&amp;guid=dd962f629e4701940be477c3bab7f55d&amp;type=3#Frame&quot;);" />
+                        <ui:VisualElement name="CSV_Icon" class="button-icon" style="flex-grow: 0; background-image: resource(&apos;Images/Icons/CSV_Icon&apos;);" />
                     </ui:Button>
                 </ui:VisualElement>
                 <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%;" />
