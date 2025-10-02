@@ -7,7 +7,7 @@
                 <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex; justify-content: flex-start; align-items: stretch; align-self: auto; position: relative;" />
             </ui:VisualElement>
         </ui:ScrollView>
-        <ui:Instance template="BottomNavBar" name="BottomNavBar" />
+        <ui:Instance template="BottomNavBar" name="BottomNavBar" style="position: absolute; left: 0; right: 0; bottom: 0;" />
         <ui:VisualElement name="SafeScreenPadding" style="flex-grow: 0; align-items: auto; flex-direction: column; background-color: rgb(53, 124, 131); bottom: auto; width: auto; height: auto; flex-basis: 0;" />
     </ui:VisualElement>
 </ui:UXML>

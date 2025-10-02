@@ -82,7 +82,7 @@
                         <ui:VisualElement name="CSV_Icon" class="button-icon" style="flex-grow: 0; background-image: resource(&apos;Images/Icons/CSV_Icon&apos;);" />
                     </ui:Button>
                 </ui:VisualElement>
-                <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%;" />
+                <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%; padding-bottom: 300px;" />
             </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -198,18 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36b3d7017954434da9069479d78565b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiDocument: {fileID: 0}
-  holdSeconds: 1.6
-  fadeInSeconds: 0.16
-  fadeOutSeconds: 0.22
-  fontSize: 16
-  minWidthPx: 260
-  maxWidthPercent: 85
-  hPad: 18
-  vPad: 12
-  cornerRadius: 14
-  itemGap: 8
-  maxVisible: 4
 --- !u!4 &672466367
 Transform:
   m_ObjectHideFlags: 0
@@ -374,6 +362,7 @@ GameObject:
   - component: {fileID: 1187461725}
   - component: {fileID: 1187461723}
   - component: {fileID: 1187461727}
+  - component: {fileID: 1187461728}
   m_Layer: 0
   m_Name: UIDocument
   m_TagString: Untagged
@@ -443,6 +432,20 @@ MonoBehaviour:
   rootName: HistoryRoot
   listName: HistoryList
   toast: {fileID: 672466366}
+--- !u!114 &1187461728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187461722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a72dc39cdbc7ea41a9e2a6a32f89325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomBarName: BottomNavBarCanvas
+  baseHeight: 250
 --- !u!1 &1362782529
 GameObject:
   m_ObjectHideFlags: 0

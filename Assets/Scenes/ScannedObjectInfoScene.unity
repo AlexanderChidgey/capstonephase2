@@ -330,6 +330,7 @@ GameObject:
   - component: {fileID: 1344255001}
   - component: {fileID: 1344254999}
   - component: {fileID: 1344254998}
+  - component: {fileID: 1344255003}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -383,6 +384,8 @@ MonoBehaviour:
   toast: {fileID: 1908147454}
   exportButtonName: ExportAsCSV_Btn
   copyAllButtonName: CopyAllData_Btn
+  scannedObjectInfoSceneName: ScannedObjectInfoScene
+  historySceneName: HistoryLogScene
 --- !u!114 &1344255001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +418,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1344255003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344254997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a72dc39cdbc7ea41a9e2a6a32f89325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomBarName: BottomNavBarCanvas
 --- !u!1 &1599572409
 GameObject:
   m_ObjectHideFlags: 0
