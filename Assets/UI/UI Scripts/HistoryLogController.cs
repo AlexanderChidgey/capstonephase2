@@ -57,11 +57,19 @@ public class HistoryLogController : MonoBehaviour
 
         Button mainBtn = BuildHistoryButton(r);
 
+        // Create the breakline between each scanned object card
+        VisualElement divider = new VisualElement();
+        divider.AddToClassList("history-divider");
+        divider.style.width = new Length(80, LengthUnit.Percent);
+        divider.style.alignSelf = Align.Center;
+
+        // Create the row of action buttons (the export as csv and delete btn)
         VisualElement actionRow = new VisualElement();
         actionRow.style.flexDirection = FlexDirection.Row;
         actionRow.style.justifyContent = Justify.FlexEnd;
         actionRow.style.alignItems = Align.Center;
         actionRow.style.marginTop = 6;
+        actionRow.style.marginRight = 50;
 
         DBLoader db = FindObjectOfType<DBLoader>();
 
@@ -89,6 +97,7 @@ public class HistoryLogController : MonoBehaviour
         
         card.Add(mainBtn);
         card.Add(actionRow);
+        card.Add(divider);
 
         return card;
     }

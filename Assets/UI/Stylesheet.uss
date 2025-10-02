@@ -200,3 +200,11 @@ Button {
 .nav-bar-text {
     font-size: 0px;
 }
+
+.history-divider {
+  height: 10px;
+  background-color: rgba(0,0,0,0.25);
+  margin-top: 50px;
+  margin-bottom: 6px;
+  border-radius: 1px;
+}
