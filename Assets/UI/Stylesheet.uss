@@ -202,9 +202,15 @@ Button {
 }
 
 .history-divider {
-  height: 10px;
-  background-color: rgba(0,0,0,0.25);
-  margin-top: 50px;
-  margin-bottom: 6px;
-  border-radius: 1px;
+    height: 10px;
+    background-color: rgba(0,0,0,0.25);
+    margin-top: 50px;
+    margin-bottom: 6px;
+    border-radius: 1px;
+}
+
+.history-primary-text {
+    padding-top: 40%;
+    font-size: 50px;
+    color:  rgba(0,0,0,0.75);
 }

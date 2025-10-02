@@ -15,6 +15,7 @@ public class HistoryLogController : MonoBehaviour
     [SerializeField] private ToastManager toast;
 
     private ScrollView _scroll;
+    private Label _emptyLabel;
 
     void OnEnable()
     {
@@ -23,11 +24,24 @@ public class HistoryLogController : MonoBehaviour
         VisualElement historyRoot = root.Q<VisualElement>(rootName);
         VisualElement listContainer = historyRoot?.Q<VisualElement>(listName);
         _scroll = listContainer?.Q<ScrollView>() ?? root.Q<ScrollView>(listName);
+        _emptyLabel = _scroll.Q<Label>("HistoryEmptyLabel");
 
         if (_scroll == null) {
             Debug.LogError("HistoryList ScrollView not found."); 
             return; 
         }
+
+        if (_emptyLabel == null)
+        {
+            _emptyLabel = new Label("No history of scans available...");
+            _emptyLabel.name = "HistoryEmptyLabel";
+            _emptyLabel.AddToClassList("history-primary-text");
+            _emptyLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            _emptyLabel.style.marginTop = 16;
+            _emptyLabel.style.marginBottom = 16;
+            _scroll.contentContainer.Add(_emptyLabel);
+        }
+
         _scroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         _scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
         Refresh();
@@ -39,6 +53,22 @@ public class HistoryLogController : MonoBehaviour
         target.Clear();
 
         IReadOnlyList<HistoryRecord> all = HistoryStoreScan.All;
+
+        // If user hasn't scanned objects yet, show "No available scans..."
+        if (all == null || all.Count == 0)
+        {
+            if (_emptyLabel != null)
+            {
+                if (_emptyLabel.parent != target) target.Add(_emptyLabel);
+                _emptyLabel.style.display = DisplayStyle.Flex;
+            }
+            return;
+        }
+
+        // Hide placeholder when we have items
+        if (_emptyLabel != null && _emptyLabel.parent == target)
+            _emptyLabel.style.display = DisplayStyle.None;
+
         for (int i = all.Count - 1; i >= 0; i--)
         {
             HistoryRecord r = all[i];
