@@ -214,6 +214,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &453897476
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453897478}
+  - component: {fileID: 453897477}
+  m_Layer: 0
+  m_Name: topNavBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &453897477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453897476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 5c1061eddb8ad429891fb9cd67d3ba0d, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: bf8962a9d7240954ca830036fd783c7a,
+    type: 3}
+  m_SortingOrder: 0
+--- !u!4 &453897478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453897476}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 200, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!850595691 &545923405
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1401,8 +1450,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1846174816}
   - component: {fileID: 1846174815}
-  - component: {fileID: 1846174817}
   - component: {fileID: 1846174818}
+  - component: {fileID: 1846174819}
   m_Layer: 0
   m_Name: uiDocument
   m_TagString: Untagged
@@ -1424,9 +1473,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: dc24b3e749d83f94682b2de722cc6d75, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: c543be5db7fbb41a6baeca07c8431290,
+  sourceAsset: {fileID: 9197481963319205126, guid: 5bc0c4f4bf5634075a0f8f75499f1450,
     type: 3}
-  m_SortingOrder: 1
+  m_SortingOrder: 0
 --- !u!4 &1846174816
 Transform:
   m_ObjectHideFlags: 0
@@ -1436,13 +1485,13 @@ Transform:
   m_GameObject: {fileID: 1846174814}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 451.64508, y: 135.67862, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1846174817
+--- !u!114 &1846174818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1451,15 +1500,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846174814}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab42856415af4e978f0afb50b3c8c13, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f568de529c6141e6b30c78958f6969f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  circleButtonName: Circle_Btn
-  backButtonName: Back_Btn
-  scrollViewName: ScanDataScrollView
-  resultsContainerName: DetectionResultsContainer
   mapButtonName: Map_Btn
---- !u!114 &1846174818
+  scanButtonName: Scan_Btn
+--- !u!114 &1846174819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1468,11 +1514,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846174814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f568de529c6141e6b30c78958f6969f, type: 3}
+  m_Script: {fileID: 11500000, guid: c2253fb082f884a8db86d4388f0e86c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapButtonName: Map_Btn
-  scanButtonName: Scan_Btn
+  panelSettings: {fileID: 11400000, guid: dc24b3e749d83f94682b2de722cc6d75, type: 2}
+  overlayAsset: {fileID: 9197481963319205126, guid: c543be5db7fbb41a6baeca07c8431290,
+    type: 3}
 --- !u!1 &2127070206
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,6 +1598,7 @@ SceneRoots:
   - {fileID: 555018384}
   - {fileID: 1648340349}
   - {fileID: 1040271586}
+  - {fileID: 453897478}
   - {fileID: 1846174816}
   - {fileID: 2127070209}
   - {fileID: 106857258}

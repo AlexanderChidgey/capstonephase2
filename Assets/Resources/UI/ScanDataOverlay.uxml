@@ -1,57 +1,56 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="Header" src="project://database/Assets/UI/Header.uxml?fileID=9197481963319205126&amp;guid=a589c7628b8f1054aa6dcbcfadc2c30f&amp;type=3#Header" />
     <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
-    <ui:VisualElement name="Container" style="flex-grow: 1;">
-        <ui:VisualElement name="ContentContainer" style="flex-grow: 1; background-color: rgb(42, 59, 86); justify-content: flex-start; align-items: stretch; align-self: stretch; flex-wrap: nowrap; flex-direction: column; border-top-left-radius: 50px; border-top-right-radius: 50px;">
-            <ui:Instance template="Header" name="Header" style="flex-basis: 10%;">
-                <AttributeOverrides element-name="Back_Btn" text="&#10;" />
-            </ui:Instance>
+    <ui:VisualElement name="Root" style="flex-grow: 1; width: 100%; height: 100%; flex-direction: column;">
+        <ui:Instance template="Header" name="MainHeader" style="flex-shrink: 0;">
+            <AttributeOverrides element-name="Back_Btn" text="&#10;" />
+        </ui:Instance>
+        <ui:VisualElement name="Container" style="flex-grow: 1; width: 100%; justify-content: flex-end; align-items: stretch; padding-top: 40px;">
+            <ui:VisualElement name="ContentContainer" style="flex-grow: 1; background-color: rgb(42, 59, 86); justify-content: flex-start; align-items: stretch; align-self: stretch; flex-wrap: nowrap; flex-direction: column; border-top-left-radius: 50px; border-top-right-radius: 50px; font-size: 45px;">
             <ui:ScrollView name="ScrollView" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" style="flex-grow: 0; min-height: 0;">
-                <ui:VisualElement name="SerialNumContainer" class="container-data" style="justify-content: flex-end; align-self: auto; flex-grow: 1; align-items: center; background-color: rgba(65, 83, 113, 0);">
-                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Button" style="flex-grow: 1; align-items: center; justify-content: space-between; align-self: stretch; background-image: url(&quot;project://database/Assets/Images/img.png?fileID=2800000&amp;guid=20313f2c5e6e74fc0a9fa89c8c6bd553&amp;type=3#img&quot;); -unity-background-scale-mode: scale-and-crop; -unity-text-align: middle-center; margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; background-color: rgba(188, 188, 188, 0); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0); height: 500px; border-top-left-radius: 50px; border-top-right-radius: 50px; border-bottom-right-radius: 50px; border-bottom-left-radius: 50px;" />
-                </ui:VisualElement>
+                <ui:VisualElement name="SerialNumContainer" class="container-data" style="justify-content: flex-end; align-self: auto; flex-grow: 1; align-items: center; background-color: rgba(65, 83, 113, 0);" />
                 <ui:VisualElement name="TechnicalInfoContainer" class="container-data" style="flex-grow: 1; max-width: none; align-self: stretch; align-items: center; justify-content: flex-start; flex-direction: column;">
                     <ui:Label tabindex="-1" text="Technical Information" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Heading" class="data-heading-text" />
+                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="idNumberLabel" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
+                        <ui:Label tabindex="-1" text="Id Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="idNumberLabel" class="data-list-label" />
+                        <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
+                            <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
+                            <ui:Label tabindex="-1" text="EQ-POL-123 " parse-escape-sequences="true" display-tooltip-when-elided="true" name="idNumberModified" class="data-value-text" style="flex-grow: 0;" />
+                        </ui:VisualElement>
+                    </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="SerialNumber_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
                         <ui:Label tabindex="-1" text="Serial Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SerialNumber_Label" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="EQ-POL-123 " parse-escape-sequences="true" display-tooltip-when-elided="true" name="serialNumberModified" class="data-value-text" />
+                            <ui:Label tabindex="-1" text="EQ-POL-123 " parse-escape-sequences="true" display-tooltip-when-elided="true" name="serialNumberModified" class="data-value-text" style="flex-grow: 0;" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
                         <ui:Label tabindex="-1" text="Model Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="ABC-123-ADC" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-value-text" />
+                            <ui:Label tabindex="-1" text="ABC-123-ADC" parse-escape-sequences="true" display-tooltip-when-elided="true" name="modelNumberModified" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfPhases_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
                         <ui:Label tabindex="-1" text="Number of Phases" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfPhases_Label" enable-rich-text="false" class="data-value-text" />
+                            <ui:Label tabindex="-1" text="2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="numberOfPhasesModified" enable-rich-text="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
                         <ui:Label tabindex="-1" text="Voltage" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Label" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="66kV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Label" enable-rich-text="false" class="data-value-text" />
+                            <ui:Label tabindex="-1" text="66kV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="voltageModified" enable-rich-text="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Last Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Last Updated" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Label" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="Mar 15, 2025" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Label" enable-rich-text="false" focusable="false" class="data-value-text" />
-                        </ui:VisualElement>
-                    </ui:Button>
-                    <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Next Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Label" class="data-list-label" />
-                        <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
-                            <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
-                            <ui:Label tabindex="-1" text="N/A" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Label" enable-rich-text="false" focusable="false" class="data-value-text" />
+                            <ui:Label tabindex="-1" text="Mar 15, 2025" parse-escape-sequences="true" display-tooltip-when-elided="true" name="lastUpdatedModified" enable-rich-text="false" focusable="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:VisualElement name="BotPadding" style="flex-grow: 1;" />
@@ -82,6 +81,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%;" />
             </ui:ScrollView>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

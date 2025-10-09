@@ -2,10 +2,10 @@
     <ui:Template name="ScanDataOverlay" src="project://database/Assets/UI/ScanDataOverlay.uxml?fileID=9197481963319205126&amp;guid=795751dd3ab524f438c69ca4e09d05ed&amp;type=3#ScanDataOverlay" />
     <ui:Template name="TopNavBar" src="project://database/Assets/UI/TopNavBar.uxml?fileID=9197481963319205126&amp;guid=bf8962a9d7240954ca830036fd783c7a&amp;type=3#TopNavBar" />
     <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
-    <ui:VisualElement name="SafeArea" style="flex-grow: 0; overflow: hidden; height: 3626px;">
+    <ui:VisualElement name="SafeArea" style="flex-grow: 1; overflow: hidden; height: 3626px;">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: flex; visibility: visible; overflow: visible; position: absolute; right: -40px; bottom: 80px; top: -80px; opacity: 1; flex-shrink: 1; width: auto; flex-direction: column; flex-basis: auto; align-self: auto; flex-grow: 1; align-items: stretch; flex-wrap: nowrap;">
             <ui:VisualElement name="EmptySpace" style="flex-grow: 0; flex-basis: 20%; display: flex; visibility: visible;" />
-            <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 100%; flex-direction: column; flex-shrink: 1; position: relative; width: 1000px; align-items: stretch; align-self: auto; margin-right: 15px;">
+            <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 100%; flex-direction: column; flex-shrink: 1; position: relative; width: 1360px; align-items: stretch;">
                 <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex;" />
             </ui:VisualElement>
         </ui:ScrollView>

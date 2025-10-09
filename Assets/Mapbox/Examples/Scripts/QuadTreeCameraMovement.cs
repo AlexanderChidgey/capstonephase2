@@ -32,6 +32,7 @@
 		private bool _isInitialized = false;
 		private Plane _groundPlane = new Plane(Vector3.up, 0);
 		private bool _dragStartedOnUI = false;
+		private bool _overlayBlocking = false;
 
 		void Awake()
 		{
@@ -48,6 +49,23 @@
 
 		public void Update()
 		{
+			var overlay = MapOverlayController.Instance;
+			bool overlayActive = overlay != null && overlay.IsOpen;
+			if (overlayActive)
+			{
+				_overlayBlocking = true;
+				_dragStartedOnUI = true;
+				_shouldDrag = false;
+				return;
+			}
+
+			if (_overlayBlocking)
+			{
+				_overlayBlocking = false;
+				_dragStartedOnUI = false;
+				_shouldDrag = false;
+			}
+
 			if (Input.GetMouseButtonDown(0) && EventSystem.current.IsPointerOverGameObject())
 			{
 				_dragStartedOnUI = true;
@@ -63,6 +81,12 @@
 		private void LateUpdate()
 		{
 			if (!_isInitialized) { return; }
+
+			var overlay = MapOverlayController.Instance;
+			if (overlay != null && overlay.IsOpen)
+			{
+				return;
+			}
 
 			if (!_dragStartedOnUI)
 			{
