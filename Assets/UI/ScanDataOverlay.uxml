@@ -13,42 +13,42 @@
                 <ui:VisualElement name="TechnicalInfoContainer" class="container-data" style="flex-grow: 1; max-width: none; align-self: stretch; align-items: center; justify-content: flex-start; flex-direction: column;">
                     <ui:Label tabindex="-1" text="Technical Information" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Heading" class="data-heading-text" />
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="SerialNumber_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Serial Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SerialNumber_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Serial Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SerialNumber" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="EQ-POL-123 " parse-escape-sequences="true" display-tooltip-when-elided="true" name="serialNumberModified" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Model Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Model Number" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="ABC-123-ADC" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfPhases_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Number of Phases" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ModelNumber_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Number of Phases" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfPhases" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="2" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumberOfPhases_Label" enable-rich-text="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Voltage" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Voltage" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="66kV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Voltage_Label" enable-rich-text="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Last Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Last Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="Mar 15, 2025" parse-escape-sequences="true" display-tooltip-when-elided="true" name="LastServiceDate_Label" enable-rich-text="false" focusable="false" class="data-value-text" />
                         </ui:VisualElement>
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:Label tabindex="-1" text="Next Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Label" class="data-list-label" />
+                        <ui:Label tabindex="-1" text="Next Service Date" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate" class="data-list-label" />
                         <ui:VisualElement name="Container" style="flex-grow: 1; align-self: auto; justify-content: flex-start; align-items: center; flex-direction: row-reverse;">
                             <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                             <ui:Label tabindex="-1" text="N/A" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NextServiceDate_Label" enable-rich-text="false" focusable="false" class="data-value-text" />
@@ -59,9 +59,12 @@
                 <ui:VisualElement name="LocationInfoContainer" class="container-data" style="flex-grow: 1;">
                     <ui:Label tabindex="-1" text="Technical Information" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Heading" class="data-heading-text" />
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="Address_Btn" class="data-button" style="flex-grow: 1; flex-direction: row; -unity-text-align: middle-center; align-items: center; align-self: stretch; justify-content: space-between;">
-                        <ui:VisualElement style="flex-grow: 1; align-items: flex-start;">
+                        <ui:VisualElement style="flex-grow: 1; align-items: flex-start; justify-content: flex-start;">
                             <ui:Label tabindex="-1" text="123 Energy QLD Street" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Address_Label" class="data-value-text" style="margin-bottom: 0;" />
-                            <ui:Label tabindex="-1" text="34.0522° N, 118.2437° W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Coordinates_Label" class="data-list-label" style="margin-top: 0;" />
+                            <ui:VisualElement name="VisualElement" style="flex-grow: 1; align-items: flex-start; align-self: auto; flex-direction: row; justify-content: flex-start;">
+                                <ui:Label tabindex="-1" text="34.0522° N" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Lat_Label" class="data-list-label" style="margin-top: 0;" />
+                                <ui:Label tabindex="-1" text="118.2437° W" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Lon_Label" class="data-list-label" style="margin-top: 0;" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="ClipboardIcon" class="data-button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/ClipboardIcon_128x171.png?fileID=2800000&amp;guid=2a0df17a7184141cdb42245ee9696fb6&amp;type=3#ClipboardIcon_128x171&quot;); flex-direction: column; flex-shrink: 0;" />
                     </ui:Button>
@@ -77,10 +80,10 @@
                     </ui:Button>
                     <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExportAsCSV_Btn" class="data-button secondary-button">
                         <ui:Label tabindex="-1" text="Export as CSV" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExportAsCSV_Label" style="-unity-text-align: middle-center;" />
-                        <ui:VisualElement name="CSV_Icon" class="button-icon" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Images/Icons/Frame.png?fileID=2800000&amp;guid=dd962f629e4701940be477c3bab7f55d&amp;type=3#Frame&quot;);" />
+                        <ui:VisualElement name="CSV_Icon" class="button-icon" style="flex-grow: 0; background-image: resource(&apos;Images/Icons/CSV_Icon&apos;);" />
                     </ui:Button>
                 </ui:VisualElement>
-                <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%;" />
+                <ui:VisualElement name="BotPadding" style="flex-grow: 1; margin-bottom: 30%; padding-bottom: 300px;" />
             </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>

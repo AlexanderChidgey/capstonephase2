@@ -21,6 +21,13 @@ public class Substation
     public double LON;
     public double LAT;
     public string REFRESH_DT;
+
+    public string SERIAL_NUMBER;
+    public string MODEL_NUMBER;
+    public string NUMBER_OF_PHASES;
+    public string LAST_SERVICE_DATE;
+    public string NEXT_SERVICE_DATE;
+    public string ADDRESS;
 }
 
 
@@ -67,6 +74,11 @@ public class DBLoader : MonoBehaviour
 
     void Awake()
     {
+    #if UNITY_EDITOR
+            Debug.Log("Detected using Unity Editor...");
+            LoadSubstationsFromResources();
+            return;
+    #else
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
             if (task.Result != DependencyStatus.Available)
@@ -75,7 +87,7 @@ public class DBLoader : MonoBehaviour
                 return;
             }
 
-            // ✅ Initialize default Firebase app
+            // Initialise default Firebase app
             AppOptions options = new AppOptions
             {
                 ApiKey = "AIzaSyBzQG8CuZM34Ktj36w4-bY8IFmWTQsyDk",
@@ -88,10 +100,9 @@ public class DBLoader : MonoBehaviour
             {
                 FirebaseApp.Create(options);
             }
-
-            // LoadDatabaseFromFirebase();
-            LoadSubstationsFromJson();
+            LoadDatabaseFromFirebase();
         });
+    #endif
     }
 
     public event Action<List<Substation>> OnSubstationsLoaded;
@@ -173,6 +184,47 @@ public class DBLoader : MonoBehaviour
         else
         {
             displayText.text = $"System ID '{systemId}' not found.";
+        }
+    }
+
+    public void LoadSubstationsFromResources()
+    {
+        TextAsset jsonFile = Resources.Load<TextAsset>("DistSubstations");
+        if (jsonFile == null)
+        {
+            Debug.LogError("DistSubstations.json not found in Resources folder.");
+            return;
+        }
+
+        try
+        {
+            List<Substation> parsed = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Substation>>(jsonFile.text);
+            if (parsed == null)
+            {
+                parsed = new List<Substation>();
+            }
+
+            substations = parsed;
+            IsLoaded = true;
+
+            Debug.Log("Loaded " + substations.Count + " substations from Resources.");
+
+            if (OnSubstationsLoaded != null)
+            {
+                OnSubstationsLoaded(substations);
+            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to parse DistSubstations.json: " + e.Message);
+
+            substations = new List<Substation>();
+            IsLoaded = true;
+
+            if (OnSubstationsLoaded != null)
+            {
+                OnSubstationsLoaded(substations);
+            }
         }
     }
 }

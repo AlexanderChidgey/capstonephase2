@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayText: {fileID: 0}
   systemIdToLoad: 0
+  geoConverter: {fileID: 0}
 --- !u!4 &59296996
 Transform:
   m_ObjectHideFlags: 0
@@ -305,6 +306,37 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 331264285}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &334069122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 334069123}
+  m_Layer: 0
+  m_Name: CSVExporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &334069123
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334069122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &608830361 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2512387469002778331, guid: 48cb3fb68c91eb94999fd99957eb0cae,
@@ -339,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &650687280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -517,7 +549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &791235131
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -615,8 +647,8 @@ GameObject:
   - component: {fileID: 815926969}
   - component: {fileID: 815926968}
   - component: {fileID: 815926970}
-  - component: {fileID: 815926971}
   - component: {fileID: 815926972}
+  - component: {fileID: 815926973}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -668,18 +700,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a72dc39cdbc7ea41a9e2a6a32f89325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &815926971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815926967}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13f4df77fe065ed4cb6bd503dc8f4179, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  bottomBarName: BottomNavBarCanvas
+  baseHeight: 250
 --- !u!114 &815926972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -697,6 +719,37 @@ MonoBehaviour:
   scrollViewName: ScanDataScrollView
   resultsContainerName: DetectionResultsContainer
   mapButtonName: Map_Btn
+  dbLoader: {fileID: 59296995}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
+  addressLabel: Address_Label
+  latLabel: Lat_Label
+  lonLabel: Lon_Label
+  toast: {fileID: 1454950395}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
+  scannedObjectInfoSceneName: ScannedObjectInfoScene
+  historySceneName: HistoryLogScene
+--- !u!114 &815926973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815926967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f568de529c6141e6b30c78958f6969f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapButtonName: Map_Btn
+  scanButtonName: Scan_Btn
+  historyButtonName: History_Btn
 --- !u!1 &942771956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,6 +1087,22 @@ MonoBehaviour:
   scrollViewName: ScanDataScrollView
   resultsContainerName: DetectionResultsContainer
   mapButtonName: Map_Btn
+  dbLoader: {fileID: 0}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
+  addressLabel: Address_Label
+  latLabel: Lat_Label
+  lonLabel: Lon_Label
+  toast: {fileID: 0}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
+  scannedObjectInfoSceneName: ScannedObjectInfoScene
+  historySceneName: HistoryLogScene
 --- !u!114 &1340760358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1050,6 +1119,50 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 0}
   m_SortingOrder: 0
+--- !u!1 &1454950391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1454950394}
+  - component: {fileID: 1454950395}
+  m_Layer: 0
+  m_Name: ToastManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1454950394
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454950391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1454950395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454950391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36b3d7017954434da9069479d78565b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1689922332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,7 +1196,6 @@ MonoBehaviour:
   detectionText: {fileID: 0}
   matchTexts: []
   matchIds: []
-  matchInfoPanel: []
   dbLoader: {fileID: 0}
 --- !u!4 &1689922334
 Transform:
@@ -1244,11 +1356,7 @@ MonoBehaviour:
   detectionText: {fileID: 0}
   matchTexts: []
   matchIds: []
-  matchInfoPanel:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  dbLoader: {fileID: 0}
+  dbLoader: {fileID: 59296995}
 --- !u!4 &2063161667
 Transform:
   m_ObjectHideFlags: 0
@@ -1333,3 +1441,5 @@ SceneRoots:
   - {fileID: 1340760356}
   - {fileID: 815926969}
   - {fileID: 59296996}
+  - {fileID: 1454950394}
+  - {fileID: 334069123}

@@ -132,11 +132,13 @@
 .button-icon {
     width: 50px;
     height: 50px;
+    padding-right: 100px;
     -unity-background-scale-mode: scale-to-fit;
     -unity-text-align: middle-left;
 }
 
 .nav-button-icon {
+    -unity-background-scale-mode: scale-to-fit;
     border-top-width: 0;
     border-right-width: 0;
     border-bottom-width: 0;
@@ -148,5 +150,67 @@
 }
 
 .high-z-index {
-    z-index:10;
+    z-index: 10;
+}
+
+Button:hover {
+    scale: 1.025;
+}
+
+Button:active {
+    scale: 0.975;
+}
+
+Button {
+    transition: 0.1s;
+}
+
+.history-item {
+    color: blue;
+    background-color: rgb(255, 255, 255);
+    min-height: 56px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border-radius: 10px;
+}
+
+.history-item-primary-text {
+    color: rgb(0, 0, 0);
+    font-size: 350%;
+}
+
+.history-item-secondary-text {
+    color: rgb(75, 85, 99);
+    font-size: 300%;
+}
+
+.data-button.history-item {
+    border-radius: 50px;
+}
+
+.history-secondary-button {
+    padding: 0;
+    font-size: 300%;
+}
+
+.danger-button {
+    background-color: red;
+}
+
+.nav-bar-text {
+    font-size: 0px;
+}
+
+.history-divider {
+    height: 10px;
+    background-color: rgba(0,0,0,0.25);
+    margin-top: 50px;
+    margin-bottom: 6px;
+    border-radius: 1px;
+}
+
+.history-primary-text {
+    padding-top: 40%;
+    font-size: 50px;
+    color:  rgba(0,0,0,0.75);
 }

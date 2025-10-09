@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using System.Linq;
+using System.Globalization;
+using UnityEngine.WSA;
+using System.Text;
 
 [RequireComponent(typeof(UIDocument))]
 public class UIController : MonoBehaviour
@@ -14,12 +18,15 @@ public class UIController : MonoBehaviour
     [SerializeField] private string resultsContainerName = "DetectionResultsContainer";
     [SerializeField] private string mapButtonName = "Map_Btn";
 
+    [SerializeField] private DBLoader dbLoader;
+    
     private UIDocument uiDocument;
     private VisualElement root;
     
 
     private VisualElement scrollView;
     private Button mapButton;
+    private Button historyButton;
     private VisualElement resultsContainer;
 
     private Button circleButton;
@@ -33,6 +40,48 @@ public class UIController : MonoBehaviour
 
     private List<ObjectDetectionHandler.MatchInfo> currentMatches;
     private bool isOverlayVisible = true;
+
+    [Header("Technical data labels inside the technical scan overlay")]
+    [SerializeField] private string overlayRootName = "ScanDataOverlay";
+    [SerializeField] private string serialNumberLabel = "SerialNumber_Label";
+    [SerializeField] private string modelNumberLabel = "ModelNumber_Label";
+    [SerializeField] private string numberOfPhasesLabel = "NumberOfPhases_Label";
+    [SerializeField] private string voltageLabel = "Voltage_Label";
+    [SerializeField] private string lastServiceDateLabel = "LastServiceDate_Label";
+    [SerializeField] private string nextServiceDateLabel = "NextServiceDate_Label";
+
+    [SerializeField] private string addressLabel = "Address_Label";
+    [SerializeField] private string latLabel = "Lat_Label";
+    [SerializeField] private string lonLabel = "Lon_Label";
+
+    [Header("Manager Scripts")]
+    [SerializeField] private ToastManager toast;
+
+    [SerializeField] private string exportButtonName = "ExportAsCSV_Btn";
+    [SerializeField] private string copyAllButtonName = "CopyAllData_Btn";
+
+    private VisualElement overlayRoot;
+    private Label serialNumber;
+    private Label modelNumber;
+    private Label numberOfPhases;
+    private Label voltage;
+    private Label lastServiceDate;
+    private Label nextServiceDate;
+    private Label address;
+    private Label lat;
+    private Label lon;
+
+    private Button serialNumberBtn;
+    private Button modelNumberBtn;
+    private Button numberOfPhasesBtn;
+    private Button voltageBtn;
+    private Button lastServiceDateBtn;
+    private Button nextServiceDateBtn;
+    private Button addressBtn;
+
+    [Header("Scene Names")]
+    [SerializeField] private string scannedObjectInfoSceneName = "ScannedObjectInfoScene";
+    [SerializeField] private string historySceneName = "HistoryLogScene";
 
     private void Awake()
     {
@@ -60,6 +109,37 @@ public class UIController : MonoBehaviour
 
         resultsContainer = root.Q<VisualElement>(resultsContainerName);
 
+        overlayRoot = scrollView.Q<VisualElement>(overlayRootName);
+        serialNumber = scrollView.Q<Label>(serialNumberLabel);
+        modelNumber = scrollView.Q<Label>(modelNumberLabel);
+        numberOfPhases = scrollView.Q<Label>(numberOfPhasesLabel);
+        voltage = scrollView.Q<Label>(voltageLabel);
+        lastServiceDate = scrollView.Q<Label>(lastServiceDateLabel);
+        nextServiceDate = scrollView.Q<Label>(nextServiceDateLabel);
+
+        address = scrollView.Q<Label>(addressLabel);
+        lat = scrollView.Q<Label>(latLabel);
+        lon = scrollView.Q<Label>(lonLabel);
+
+        serialNumberBtn = root.Q<Button>("SerialNumber_Btn");
+        modelNumberBtn = root.Q<Button>("ModelNumber_Btn");
+        numberOfPhasesBtn = root.Q<Button>("NumberOfPhases_Btn");
+        voltageBtn = root.Q<Button>("Voltage_Btn");
+        lastServiceDateBtn = root.Q<Button>("LastServiceDate_Btn");
+        nextServiceDateBtn = root.Q<Button>("NextServiceDate_Btn");
+        addressBtn = root.Q<Button>("Address_Btn");
+
+        HookCopy(serialNumberBtn, serialNumber, "Serial Number");
+        HookCopy(modelNumberBtn, modelNumber, "Model Number");
+        HookCopy(numberOfPhasesBtn, numberOfPhases, "Number of Phases");
+        HookCopy(voltageBtn, voltage, "Voltage");
+        HookCopy(lastServiceDateBtn, lastServiceDate, "Last Service Date");
+        HookCopy(nextServiceDateBtn, nextServiceDate, "Next Service Date");
+        HookCopy(addressBtn, address, "Address");
+
+        Button exportBtn = root.Q<Button>(exportButtonName);
+        Button copyAllBtn = root.Q<Button>(copyAllButtonName);
+
         if (circleButton != null)
         {
             circleButton.clicked += OnCircleButtonClicked;
@@ -78,7 +158,14 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
         }
-
+        if (exportBtn != null)
+        {
+            exportBtn.clicked += OnExportCsvClicked;
+        }
+        if (copyAllBtn != null)
+        {
+            copyAllBtn.clicked += OnCopyAllDataClicked;
+        }
 
 
         if (backButton != null)
@@ -90,6 +177,15 @@ public class UIController : MonoBehaviour
         {
             Debug.LogWarning("Button '" + backButtonName + "' not found in UI.");
         }
+
+        if (StoreSelectedScan.ShowOverlayNextScene && !string.IsNullOrEmpty(StoreSelectedScan.Id))
+        {
+            ShowOverlayForHistoryId(StoreSelectedScan.Id);
+            StoreSelectedScan.ShowOverlayNextScene = false;
+        }
+
+        else
+        {
 
         if (scrollView != null)
         {
@@ -111,12 +207,12 @@ public class UIController : MonoBehaviour
             {
                 detectionNameLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Label");
                 detectionIdLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Id");
+                Debug.Log($"Detection button {i + 1} found: {detectionButtons[i].name}");
             }
-            // else
-            // {
-            //     Debug.LogWarning("'" + buttonName + "' not found in UI.");
-            //     continue;
-            // }
+            else {
+                Debug.LogWarning($"Detection button {i + 1} not found in UXML.");
+            }
+        }
         }
     }
 
@@ -142,6 +238,14 @@ public class UIController : MonoBehaviour
                 detectionButtons[i].clicked -= detectionHandlers[i];
             }
         }
+
+        UnhookCopy(serialNumberBtn);
+        UnhookCopy(modelNumberBtn);
+        UnhookCopy(numberOfPhasesBtn);
+        UnhookCopy(voltageBtn);
+        UnhookCopy(lastServiceDateBtn);
+        UnhookCopy(nextServiceDateBtn);
+        UnhookCopy(addressBtn);
     }
 
     private void OnCircleButtonClicked()
@@ -171,11 +275,28 @@ public class UIController : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-
     private void OnBackButtonClicked()
     {
+        string current = SceneManager.GetActiveScene().name;
+
+        if (!string.IsNullOrEmpty(scannedObjectInfoSceneName) &&
+            string.Equals(current, scannedObjectInfoSceneName))
+        {
+            if (!string.IsNullOrEmpty(historySceneName))
+            {
+                Debug.Log("Returning to History scene: " + historySceneName);
+                SceneManager.LoadScene(historySceneName);
+                return;
+            }
+            else
+            {
+                Debug.LogWarning("Back: historySceneName is not set.");
+            }
+        }
+
         HideOverlay();
     }
+
 
     public void ShowOverlay()
     {
@@ -208,8 +329,9 @@ public class UIController : MonoBehaviour
     public void UpdateDetectionUI(List<ObjectDetectionHandler.MatchInfo> matches)
 {
     currentMatches = matches ?? new List<ObjectDetectionHandler.MatchInfo>();
+    Debug.Log("UpdateDetectionUI called with " + (matches?.Count ?? 0) + " matches.");
 
-    for (int i = 0; i < detectionButtons.Length; i++)
+        for (int i = 0; i < detectionButtons.Length; i++)
     {
         if (detectionButtons[i] == null) continue;
 
@@ -282,6 +404,8 @@ public class UIController : MonoBehaviour
         if (canAccessMatch)
         {
             ObjectDetectionHandler.MatchInfo match = currentMatches[i];
+            PopulateTechnicalPanel(match);
+            StoreScanHistory(match);
             if (match == null)
             {
                 Debug.LogWarning("Match at index " + i.ToString() + " is null.");
@@ -307,7 +431,247 @@ public class UIController : MonoBehaviour
                 }
             }
         }
-        //for now, overlay of electrical object data will always be visible (even if data is invalid or missing)!! 
+        ShowOverlay();
+    }
+
+    private Substation FindSubstationById(string id)
+    {
+        if (string.IsNullOrEmpty(id) || dbLoader == null) return null;
+
+        List<Substation> list = dbLoader.GetSubstations(); 
+        return list.FirstOrDefault(s =>
+            string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static void SetLabel(Label target, string value)
+    {
+        if (target == null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(value))
+        {
+            target.text = "-";
+        }
+        else
+        {
+            target.text = value;
+        }
+    }
+
+    private void PopulateTechnicalPanel(ObjectDetectionHandler.MatchInfo match)
+    {
+        if (overlayRoot == null)
+        {
+            Debug.LogWarning("ScanDataOverlay root not found. Did not populate technical panel.");
+            return;
+        }
+
+        string id = match?.ID;
+
+        Substation sub = FindSubstationById(id);
+
+        SetLabel(serialNumber, sub?.SERIAL_NUMBER);
+        SetLabel(modelNumber, sub?.MODEL_NUMBER);
+        SetLabel(numberOfPhases, sub?.NUMBER_OF_PHASES);
+        SetLabel(voltage, sub?.MAX_VOLT);
+        SetLabel(lastServiceDate, sub?.LAST_SERVICE_DATE);
+        SetLabel(nextServiceDate, sub?.NEXT_SERVICE_DATE);
+
+        SetLabel(address, sub?.ADDRESS);
+        SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
+        SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+
+    }
+
+    private void StoreScanHistory(ObjectDetectionHandler.MatchInfo match)
+    {
+        string id = match?.ID;
+
+        Substation sub = FindSubstationById(id);
+
+        HistoryStoreScan.Add(
+            id: match.ID,
+            objectType: sub?.TR_TYPE,
+            serialNumber: sub?.SERIAL_NUMBER,
+            model: sub?.MODEL_NUMBER,
+            voltage: sub?.MAX_VOLT
+        );
+    }
+
+    private void HookCopy(Button btn, Label source, string friendlyName)
+    {
+        if (btn == null || source == null) return;
+
+        Action handler = () =>
+        {
+            string text = string.IsNullOrEmpty(source.text) ? "-" : source.text;
+            GUIUtility.systemCopyBuffer = text;
+            if (toast != null) toast.Show($"{friendlyName} copied");
+            else Debug.Log($"{friendlyName} copied: {text}");
+        };
+
+        btn.clicked += handler;
+        btn.userData = handler;
+    }
+
+    private void UnhookCopy(Button btn)
+    {
+        if (btn?.userData is Action handler)
+        {
+            btn.clicked -= handler;
+            btn.userData = null;
+        }
+    }
+
+    private void OnExportCsvClicked()
+    {
+        DBLoader db = dbLoader != null ? dbLoader : FindObjectOfType<DBLoader>();
+
+        GetScannedObjectInfo(db, out HistoryRecord record);
+
+        string path = CsvExporter.ExportOneCsv(in record, db);
+
+        ShowToast($"Exported CSV to:\n{path}");
+    }
+
+    private bool GetScannedObjectInfo(DBLoader db, out HistoryRecord record)
+    {
+        record = default;
+
+        string id = DetectionDataStore.SelectedId;
+
+        Substation sub = null;
+        if (db != null)
+        {
+            List<Substation> list = db.GetSubstations();
+            if (list != null)
+            {
+                sub = list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        record = new HistoryRecord
+        {
+            Id = sub?.SYSTEM_ID ?? id ?? name ?? "unknown",
+            ObjectType = sub?.TR_TYPE ?? "-",
+            SerialNumber = sub?.SERIAL_NUMBER ?? "-",
+            Model = sub?.MODEL_NUMBER ?? "-",
+            Voltage = sub?.MAX_VOLT ?? "-",
+            Utc = DateTime.UtcNow
+        };
+
+        return true;
+    }
+
+    private void ShowToast(string message)
+    {
+        ToastManager tm = FindObjectOfType<ToastManager>();
+        if (tm != null) tm.Show(message);
+        else Debug.Log($"{message}");
+    }
+
+    private void OnCopyAllDataClicked()
+    {
+        DBLoader db = dbLoader != null ? dbLoader : FindObjectOfType<DBLoader>();
+
+        GetCurrentSubstation(db, out Substation sub, out string fallbackId, out string fallbackName);
+
+        string payload = BuildCopyAllPayload(sub, fallbackId, fallbackName);
+        GUIUtility.systemCopyBuffer = payload;
+        ShowToast("Copied all data to clipboard.");
+    }
+
+    private bool GetCurrentSubstation(DBLoader db, out Substation sub, out string id, out string nameSel)
+    {
+        sub = null;
+
+        id = DetectionDataStore.SelectedId;
+        nameSel = DetectionDataStore.SelectedName;
+
+        string idKey = id;
+
+        if (db != null && !string.IsNullOrEmpty(idKey))
+        {
+            List<Substation> list = db.GetSubstations();
+            if (list != null)
+            {
+                sub = list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, idKey, StringComparison.OrdinalIgnoreCase));
+            }
+        }
+
+        return sub != null || !string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(nameSel);
+    }
+
+
+    private string BuildCopyAllPayload(Substation sub, string fallbackId, string fallbackName)
+    {
+        string F(string s) => string.IsNullOrEmpty(s) ? "-" : s;
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Exported (UTC): {DateTime.UtcNow:o}");
+        sb.AppendLine();
+
+        if (sub != null)
+        {
+            sb.AppendLine($"SYSTEM_ID: {F(sub.SYSTEM_ID)}");
+            sb.AppendLine($"USER_REF_I: {F(sub.USER_REF_I)}");
+            sb.AppendLine($"SITE_DESC: {F(sub.SITE_DESC)}");
+            sb.AppendLine($"TR_TYPE: {F(sub.TR_TYPE)}");
+            sb.AppendLine($"MAX_KVA: {F(sub.MAX_KVA)}");
+            sb.AppendLine($"MAX_VOLT: {F(sub.MAX_VOLT)}");
+            sb.AppendLine($"LON: {sub.LON}");
+            sb.AppendLine($"LAT: {sub.LAT}");
+            sb.AppendLine($"REFRESH_DT: {F(sub.REFRESH_DT)}");
+            sb.AppendLine($"SERIAL_NUMBER: {F(sub.SERIAL_NUMBER)}");
+            sb.AppendLine($"MODEL_NUMBER: {F(sub.MODEL_NUMBER)}");
+            sb.AppendLine($"NUMBER_OF_PHASES: {F(sub.NUMBER_OF_PHASES)}");
+            sb.AppendLine($"LAST_SERVICE_DATE: {F(sub.LAST_SERVICE_DATE)}");
+            sb.AppendLine($"NEXT_SERVICE_DATE: {F(sub.NEXT_SERVICE_DATE)}");
+            sb.AppendLine($"ADDRESS: {F(sub.ADDRESS)}");
+        }
+        else
+        {
+            ShowToast("Unable to copy technical data");
+        }
+
+        return sb.ToString();
+    }
+
+    public void ShowOverlayForHistoryId(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+        {
+            ShowToast("Unable to show scan information.");
+            return;
+        }
+
+        var sub = FindSubstationById(id);
+
+        SetLabel(serialNumber, sub?.SERIAL_NUMBER);
+        SetLabel(modelNumber, sub?.MODEL_NUMBER);
+        SetLabel(numberOfPhases, sub?.NUMBER_OF_PHASES);
+        SetLabel(voltage, sub?.MAX_VOLT);
+        SetLabel(lastServiceDate, sub?.LAST_SERVICE_DATE);
+        SetLabel(nextServiceDate, sub?.NEXT_SERVICE_DATE);
+        SetLabel(address, sub?.ADDRESS);
+
+        if (sub != null)
+        {
+            SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
+            SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+            DetectionDataStore.SelectedId = sub.SYSTEM_ID;
+            DetectionDataStore.SelectedName = sub.SITE_DESC;
+        }
+        else
+        {
+            SetLabel(lat, "-");
+            SetLabel(lon, "-");
+            DetectionDataStore.SelectedId = id;
+            DetectionDataStore.SelectedName = "-";
+        }
+
         ShowOverlay();
     }
 
