@@ -1,12 +1,21 @@
+// UIController.cs - Manages the main overlay UI (non-map scene) using UI Toolkit.
+// Responsibilities mirror UIControllerMapOverlay but for a different scene flow:
+//  - Installs button handlers, populates detection results, and manages navigation
+//  - Relies on DBLoader data to fill technical details when the user taps a detection
+//  - Works with StoreSelectedScan to pass IDs across scenes.
+//
+// The script has grown complex; comments outline the major phases (wiring, data population).
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using Debug = UnityEngine.Debug;
 using System.Linq;
 using System.Globalization;
-using UnityEngine.WSA;
 using System.Text;
+// using System.Diagnostics; // ← avoid to prevent Debug ambiguity
 
 [RequireComponent(typeof(UIDocument))]
 public class UIController : MonoBehaviour
@@ -22,7 +31,6 @@ public class UIController : MonoBehaviour
     
     private UIDocument uiDocument;
     private VisualElement root;
-    
 
     private VisualElement scrollView;
     private Button mapButton;
@@ -81,7 +89,24 @@ public class UIController : MonoBehaviour
 
     [Header("Scene Names")]
     [SerializeField] private string scannedObjectInfoSceneName = "ScannedObjectInfoScene";
+    [SerializeField] private string mapObjectInfoSceneName = "MapObjectInfoScene";
+
     [SerializeField] private string historySceneName = "HistoryLogScene";
+    [SerializeField] private string mapSceneName = "ZoomableMap";
+
+    // NEW: pending actions while data is loading
+    private string pendingHistoryId;                                          // NEW
+    private ObjectDetectionHandler.MatchInfo pendingMatchToPopulate;          // NEW
+
+    // NEW: helper to ensure we have a DBLoader
+    private void EnsureDbLoader()                                            // NEW
+    {
+        if (dbLoader == null)
+        {
+            dbLoader = FindObjectOfType<DBLoader>();
+            Debug.Log($"[UIController] dbLoader {(dbLoader ? "found" : "NOT found")} in scene.");
+        }
+    }
 
     private void Awake()
     {
@@ -167,7 +192,6 @@ public class UIController : MonoBehaviour
             copyAllBtn.clicked += OnCopyAllDataClicked;
         }
 
-
         if (backButton != null)
         {
             backButton.clicked += OnBackButtonClicked;
@@ -178,58 +202,69 @@ public class UIController : MonoBehaviour
             Debug.LogWarning("Button '" + backButtonName + "' not found in UI.");
         }
 
+        // NEW: subscribe to DB loaded event (and handle already-loaded case)
+        EnsureDbLoader();                                                                    // NEW
+        if (dbLoader != null)                                                                // NEW
+        {
+            dbLoader.OnSubstationsLoaded += OnSubstationsLoaded;                             // NEW
+            Debug.Log("[UIController] Subscribed to DBLoader.OnSubstationsLoaded");          // NEW
+            if (dbLoader.IsLoaded)                                                           // NEW
+            {
+                Debug.Log("[UIController] DB already loaded, invoking handler now.");        // NEW
+                OnSubstationsLoaded(dbLoader.GetSubstations());                              // NEW
+            }
+        }                                                                                    // NEW
+
         if (StoreSelectedScan.ShowOverlayNextScene && !string.IsNullOrEmpty(StoreSelectedScan.Id))
         {
-            ShowOverlayForHistoryId(StoreSelectedScan.Id);
+            // If DB not ready yet, defer until OnSubstationsLoaded
+            if (dbLoader != null && !dbLoader.IsLoaded)                                      // NEW
+            {
+                pendingHistoryId = StoreSelectedScan.Id;                                     // NEW
+                Debug.Log($"[UIController] Deferring ShowOverlayForHistoryId('{pendingHistoryId}') until data loads."); // NEW
+            }
+            else
+            {
+                ShowOverlayForHistoryId(StoreSelectedScan.Id);
+            }
             StoreSelectedScan.ShowOverlayNextScene = false;
         }
-
         else
         {
-
-        if (scrollView != null)
-        {
-            scrollView.style.display = DisplayStyle.None;
-            Debug.Log("scrollView hidden by default.");
-        }
-
-        if (resultsContainer != null)
-        {
-            resultsContainer.style.display = DisplayStyle.None;
-            Debug.Log("DetectionResultsContainer hidden by default.");
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            detectionButtons[i] = root.Q<Button>($"Detection{i + 1}Button");
-
-            if (detectionButtons[i] != null)
+            if (scrollView != null)
             {
-                detectionNameLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Label");
-                detectionIdLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Id");
-                Debug.Log($"Detection button {i + 1} found: {detectionButtons[i].name}");
+                scrollView.style.display = DisplayStyle.None;
+                Debug.Log("scrollView hidden by default.");
             }
-            else {
-                Debug.LogWarning($"Detection button {i + 1} not found in UXML.");
+
+            if (resultsContainer != null)
+            {
+                resultsContainer.style.display = DisplayStyle.None;
+                Debug.Log("DetectionResultsContainer hidden by default.");
             }
-        }
+
+            for (int i = 0; i < 3; i++)
+            {
+                detectionButtons[i] = root.Q<Button>($"Detection{i + 1}Button");
+
+                if (detectionButtons[i] != null)
+                {
+                    detectionNameLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Label");
+                    detectionIdLabels[i] = detectionButtons[i].Q<Label>($"Detection{i + 1}Id");
+                    Debug.Log($"Detection button {i + 1} found: {detectionButtons[i].name}");
+                }
+                else {
+                    Debug.LogWarning($"Detection button {i + 1} not found in UXML.");
+                }
+            }
         }
     }
 
     private void OnDisable()
     {
-        if (circleButton != null)
-        {
-            circleButton.clicked -= OnCircleButtonClicked;
-        }
-        if (backButton != null)
-        {
-            backButton.clicked -= OnBackButtonClicked;
-        }
-        if (mapButton != null)
-        {
-            mapButton.clicked -= OnMapButtonClicked;
-        }
+        if (circleButton != null)  circleButton.clicked -= OnCircleButtonClicked;
+        if (backButton != null)    backButton.clicked   -= OnBackButtonClicked;
+        if (mapButton != null)     mapButton.clicked    -= OnMapButtonClicked;
 
         for (int i = 0; i < detectionButtons.Length; i++)
         {
@@ -246,14 +281,40 @@ public class UIController : MonoBehaviour
         UnhookCopy(lastServiceDateBtn);
         UnhookCopy(nextServiceDateBtn);
         UnhookCopy(addressBtn);
+
+        // NEW: unsubscribe
+        if (dbLoader != null)                                                                  // NEW
+        {
+            dbLoader.OnSubstationsLoaded -= OnSubstationsLoaded;                               // NEW
+            Debug.Log("[UIController] Unsubscribed from DBLoader.OnSubstationsLoaded");       // NEW
+        }                                                                                      // NEW
+    }
+
+    // NEW: this runs when DBLoader finishes
+    private void OnSubstationsLoaded(List<Substation> subs)                                    // NEW
+    {
+        int count = subs?.Count ?? 0;
+        Debug.Log($"[UIController] OnSubstationsLoaded: {count} items.");
+
+        // If something asked to show overlay before data, do it now
+        if (!string.IsNullOrEmpty(pendingHistoryId))                                           // NEW
+        {
+            Debug.Log($"[UIController] Running deferred ShowOverlayForHistoryId('{pendingHistoryId}')"); // NEW
+            ShowOverlayForHistoryId(pendingHistoryId);                                         // NEW
+            pendingHistoryId = null;                                                           // NEW
+        }
+
+        if (pendingMatchToPopulate != null)                                                    // NEW
+        {
+            Debug.Log($"[UIController] Running deferred PopulateTechnicalPanel for ID='{pendingMatchToPopulate.ID}'"); // NEW
+            PopulateTechnicalPanel(pendingMatchToPopulate);                                    // NEW
+            pendingMatchToPopulate = null;                                                     // NEW
+        }
     }
 
     private void OnCircleButtonClicked()
     {
-        if (resultsContainer == null)
-        {
-            return;
-        }
+        if (resultsContainer == null) return;
 
         bool isCurrentlyVisible = resultsContainer.style.display == DisplayStyle.Flex;
 
@@ -293,10 +354,20 @@ public class UIController : MonoBehaviour
                 Debug.LogWarning("Back: historySceneName is not set.");
             }
         }
+        if (!string.IsNullOrEmpty(mapObjectInfoSceneName) && string.Equals(current, mapObjectInfoSceneName)) {
+            if (!string.IsNullOrEmpty(mapSceneName))
+            {
+                Debug.Log("Returning to Map scene: " + mapSceneName);
+                SceneManager.LoadScene(mapSceneName);
+                return;
+            } else
+            {
+                Debug.LogWarning("Back: historySceneName is not set.");
+            }
+        }
 
         HideOverlay();
     }
-
 
     public void ShowOverlay()
     {
@@ -327,41 +398,40 @@ public class UIController : MonoBehaviour
     }
 
     public void UpdateDetectionUI(List<ObjectDetectionHandler.MatchInfo> matches)
-{
-    currentMatches = matches ?? new List<ObjectDetectionHandler.MatchInfo>();
-    Debug.Log("UpdateDetectionUI called with " + (matches?.Count ?? 0) + " matches.");
+    {
+        currentMatches = matches ?? new List<ObjectDetectionHandler.MatchInfo>();
+        Debug.Log("UpdateDetectionUI called with " + (matches?.Count ?? 0) + " matches.");
 
         for (int i = 0; i < detectionButtons.Length; i++)
-    {
-        if (detectionButtons[i] == null) continue;
-
-        // Remove previous handler if it exists
-        if (detectionHandlers[i] != null)
         {
-            detectionButtons[i].clicked -= detectionHandlers[i];
-        }
+            if (detectionButtons[i] == null) continue;
 
-        if (i < currentMatches.Count)
-        {
-            detectionNameLabels[i].text = currentMatches[i].Name;
-            detectionIdLabels[i].text = currentMatches[i].ID;
-            detectionButtons[i].style.display = DisplayStyle.Flex;
+            // Remove previous handler if it exists
+            if (detectionHandlers[i] != null)
+            {
+                detectionButtons[i].clicked -= detectionHandlers[i];
+            }
 
-            int index = i; // capture fixed index
-            detectionHandlers[i] = () => OnDetectionButtonClicked(index);
-            detectionButtons[i].clicked += detectionHandlers[i];
-        }
-        else
-        {
-            detectionNameLabels[i].text = "";
-            detectionIdLabels[i].text = "";
-            detectionButtons[i].style.display = DisplayStyle.None;
+            if (i < currentMatches.Count)
+            {
+                detectionNameLabels[i].text = currentMatches[i].Name;
+                detectionIdLabels[i].text = currentMatches[i].ID;
+                detectionButtons[i].style.display = DisplayStyle.Flex;
 
-            detectionHandlers[i] = null;
+                int index = i; // capture fixed index
+                detectionHandlers[i] = () => OnDetectionButtonClicked(index);
+                detectionButtons[i].clicked += detectionHandlers[i];
+            }
+            else
+            {
+                detectionNameLabels[i].text = "";
+                detectionIdLabels[i].text = "";
+                detectionButtons[i].style.display = DisplayStyle.None;
+
+                detectionHandlers[i] = null;
+            }
         }
     }
-}
-
 
     private void OnDetectionButtonClicked(int i)
     {
@@ -377,87 +447,74 @@ public class UIController : MonoBehaviour
 
         Debug.Log("OnDetectionButtonClicked invoked for index " + i.ToString());
 
-        // Here, validate whether we can safely access currentMatches[index].
-        bool canAccessMatch = false;
-        int matchesCount = 0;
-
-        if (currentMatches == null)
+        if (currentMatches == null || i < 0 || i >= currentMatches.Count)
         {
-            Debug.LogWarning("No detection matches available (currentMatches is null).");
-        }
-        else
-        {
-            matchesCount = currentMatches.Count;
-            if (i < 0 || i >= matchesCount)
-            {
-                Debug.LogWarning(
-                    "Invalid detection index: " + i.ToString() +
-                    ". Valid range is 0.." + (matchesCount - 1).ToString() + "."
-                );
-            }
-            else
-            {
-                canAccessMatch = true;
-            }
+            Debug.LogWarning("Invalid detection selection or no matches.");
+            return;
         }
 
-        if (canAccessMatch)
-        {
-            ObjectDetectionHandler.MatchInfo match = currentMatches[i];
-            PopulateTechnicalPanel(match);
-            StoreScanHistory(match);
-            if (match == null)
-            {
-                Debug.LogWarning("Match at index " + i.ToString() + " is null.");
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(match.Name))
-                {
-                    Debug.LogWarning("Match.Name is null or empty.");
-                }
-                else
-                {
-                    DetectionDataStore.SelectedName = match.Name;
-                }
+        var match = currentMatches[i];
 
-                if (string.IsNullOrEmpty(match.ID))
-                {
-                    Debug.LogWarning("Match.ID is null or empty.");
-                }
-                else
-                {
-                    DetectionDataStore.SelectedId = match.ID;
-                }
-            }
+        // NEW: if data not ready yet, defer populate
+        if (!(dbLoader?.IsLoaded ?? false))                                                   // NEW
+        {
+            pendingMatchToPopulate = match;                                                   // NEW
+            Debug.Log("[UIController] DB not loaded yet; deferring PopulateTechnicalPanel."); // NEW
+            return;                                                                           // NEW
         }
+
+        PopulateTechnicalPanel(match);
+        StoreScanHistory(match);
+
+        if (!string.IsNullOrEmpty(match.Name)) DetectionDataStore.SelectedName = match.Name;
+        if (!string.IsNullOrEmpty(match.ID))   DetectionDataStore.SelectedId   = match.ID;
+
         ShowOverlay();
     }
 
     private Substation FindSubstationById(string id)
     {
-        if (string.IsNullOrEmpty(id) || dbLoader == null) return null;
+        Debug.Log($"[UIController] FindSubstationById(id='{id ?? "null"}') " +
+                  $"dbLoader={(dbLoader != null)}, isLoaded={(dbLoader?.IsLoaded ?? false)}");
 
-        List<Substation> list = dbLoader.GetSubstations(); 
-        return list.FirstOrDefault(s =>
-            string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+        if (string.IsNullOrEmpty(id))
+        {
+            Debug.LogWarning("[UIController] FindSubstationById: id is null/empty.");
+            return null;
+        }
+
+        if (dbLoader == null)
+        {
+            Debug.LogError("[UIController] FindSubstationById: dbLoader is null.");
+            return null;
+        }
+
+        if (!dbLoader.IsLoaded)                                                                // NEW
+        {
+            Debug.LogWarning("[UIController] Data not loaded yet; FindSubstationById returning null."); // NEW
+            return null;                                                                       // NEW
+        }
+
+        var list = dbLoader.GetSubstations();
+        int count = list?.Count ?? 0;
+        Debug.Log($"[UIController] Substation list count = {count}");
+
+        if (count == 0) return null;
+
+        var match = list.FirstOrDefault(s =>
+            s != null && string.Equals(s.SYSTEM_ID, id, StringComparison.OrdinalIgnoreCase));
+
+        Debug.Log(match != null
+            ? $"[UIController] Match found for id='{id}' → Site='{match.SITE_DESC}'"
+            : $"[UIController] No match for id='{id}'");
+
+        return match;
     }
 
     private static void SetLabel(Label target, string value)
     {
-        if (target == null)
-        {
-            return;
-        }
-
-        if (string.IsNullOrEmpty(value))
-        {
-            target.text = "-";
-        }
-        else
-        {
-            target.text = value;
-        }
+        if (target == null) return;
+        target.text = string.IsNullOrEmpty(value) ? "-" : value;
     }
 
     private void PopulateTechnicalPanel(ObjectDetectionHandler.MatchInfo match)
@@ -468,7 +525,16 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        // NEW: guard if data not ready yet
+        if (!(dbLoader?.IsLoaded ?? false))                                                   // NEW
+        {
+            pendingMatchToPopulate = match;                                                   // NEW
+            Debug.Log("[UIController] PopulateTechnicalPanel deferred until data loads.");     // NEW
+            return;                                                                           // NEW
+        }
+
         string id = match?.ID;
+        Debug.Log($"PopulateTechnicalPanel ID={id}");
 
         Substation sub = FindSubstationById(id);
 
@@ -478,17 +544,23 @@ public class UIController : MonoBehaviour
         SetLabel(voltage, sub?.MAX_VOLT);
         SetLabel(lastServiceDate, sub?.LAST_SERVICE_DATE);
         SetLabel(nextServiceDate, sub?.NEXT_SERVICE_DATE);
-
         SetLabel(address, sub?.ADDRESS);
-        SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
-        SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
 
+        if (sub != null)
+        {
+            SetLabel(lat, sub.LAT.ToString("F6", CultureInfo.InvariantCulture));
+            SetLabel(lon, sub.LON.ToString("F6", CultureInfo.InvariantCulture));
+        }
+        else
+        {
+            SetLabel(lat, "-");
+            SetLabel(lon, "-");
+        }
     }
 
     private void StoreScanHistory(ObjectDetectionHandler.MatchInfo match)
     {
         string id = match?.ID;
-
         Substation sub = FindSubstationById(id);
 
         HistoryStoreScan.Add(
@@ -543,7 +615,7 @@ public class UIController : MonoBehaviour
         string id = DetectionDataStore.SelectedId;
 
         Substation sub = null;
-        if (db != null)
+        if (db != null && (db.IsLoaded || Application.isEditor)) // tolerate editor preview
         {
             List<Substation> list = db.GetSubstations();
             if (list != null)
@@ -583,27 +655,28 @@ public class UIController : MonoBehaviour
         ShowToast("Copied all data to clipboard.");
     }
 
-    private bool GetCurrentSubstation(DBLoader db, out Substation sub, out string id, out string nameSel)
+private bool GetCurrentSubstation(DBLoader db, out Substation sub, out string id, out string nameSel)
+{
+    sub = null;
+
+    id = DetectionDataStore.SelectedId;
+    nameSel = DetectionDataStore.SelectedName;
+
+    // COPY the out param to a local before using it in a lambda
+    string idKey = id;
+
+    if (db != null && db.IsLoaded && !string.IsNullOrEmpty(idKey))
     {
-        sub = null;
-
-        id = DetectionDataStore.SelectedId;
-        nameSel = DetectionDataStore.SelectedName;
-
-        string idKey = id;
-
-        if (db != null && !string.IsNullOrEmpty(idKey))
+        List<Substation> list = db.GetSubstations();
+        if (list != null)
         {
-            List<Substation> list = db.GetSubstations();
-            if (list != null)
-            {
-                sub = list.FirstOrDefault(s => string.Equals(s.SYSTEM_ID, idKey, StringComparison.OrdinalIgnoreCase));
-            }
+            sub = list.FirstOrDefault(s =>
+                string.Equals(s.SYSTEM_ID, idKey, StringComparison.OrdinalIgnoreCase));
         }
-
-        return sub != null || !string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(nameSel);
     }
 
+    return sub != null || !string.IsNullOrEmpty(id) || !string.IsNullOrEmpty(nameSel);
+}
 
     private string BuildCopyAllPayload(Substation sub, string fallbackId, string fallbackName)
     {
@@ -647,6 +720,14 @@ public class UIController : MonoBehaviour
             return;
         }
 
+        // NEW: if not loaded, defer this call
+        if (!(dbLoader?.IsLoaded ?? false))                                                   // NEW
+        {
+            pendingHistoryId = id;                                                            // NEW
+            Debug.Log($"[UIController] Deferring ShowOverlayForHistoryId('{id}') until data loads."); // NEW
+            return;                                                                           // NEW
+        }
+
         var sub = FindSubstationById(id);
 
         SetLabel(serialNumber, sub?.SERIAL_NUMBER);
@@ -674,8 +755,4 @@ public class UIController : MonoBehaviour
 
         ShowOverlay();
     }
-
 }
-
-
-

@@ -1,3 +1,6 @@
+// UIControllerMap.cs - Lightweight controller for the bottom navigation buttons on the Map scene
+// (when not using the MapOverlayController singleton). It simply binds buttons to scene loads.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,6 +46,42 @@ public class UIControllerMap : MonoBehaviour
 
         root = uiDocument.rootVisualElement;
 
+        BindButtons();
+    }
+
+    private void OnDisable()
+    {
+        UnbindButtons();
+    }
+    private void OnMapButtonClicked()
+    {
+        string sceneName = "ZoomableMap";
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void OnScanButtonClicked()
+    {
+        string sceneName = "MainScene";
+        
+        SceneManager.LoadScene(sceneName);
+    }
+    private void OnHistoryButtonClicked()
+    {
+        string sceneName = "HistoryLogScene";
+        Debug.Log("Loading scene: " + sceneName);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void BindButtons()
+    {
+        UnbindButtons();
+
+        if (root == null)
+        {
+            return;
+        }
+
         mapButton = root.Q<Button>(mapButtonName);
         scanButton = root.Q<Button>(scanButtonName);
         historyButton = root.Q<Button>(historyButtonName);
@@ -72,42 +111,33 @@ public class UIControllerMap : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Button '" + mapButtonName + "' not found in UI.");
+            Debug.LogWarning("Button '" + historyButtonName + "' not found in UI.");
         }
     }
 
-    private void OnDisable()
+    private void UnbindButtons()
     {
         if (mapButton != null)
         {
             mapButton.clicked -= OnMapButtonClicked;
+            mapButton = null;
         }
         if (scanButton != null)
         {
             scanButton.clicked -= OnScanButtonClicked;
+            scanButton = null;
         }
         if (historyButton != null)
         {
             historyButton.clicked -= OnHistoryButtonClicked;
+            historyButton = null;
         }
     }
-    private void OnMapButtonClicked()
-    {
-        string sceneName = "ZoomableMap";
-        Debug.Log("Loading scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
-    }
 
-    private void OnScanButtonClicked()
+    public void RefreshButtons()
     {
-        string sceneName = "MainScene";
-        SceneManager.LoadScene(sceneName);
-    }
-    private void OnHistoryButtonClicked()
-    {
-        string sceneName = "HistoryLogScene";
-        Debug.Log("Loading scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        root = uiDocument != null ? uiDocument.rootVisualElement : null;
+        BindButtons();
     }
 }
 

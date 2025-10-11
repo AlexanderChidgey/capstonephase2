@@ -1,6 +1,15 @@
+// MapOverlayController.cs - Singleton responsible for instantiating the map overlay UXML and wiring nav buttons.
+// Responsibilities:
+//  - Clone the ScanDataOverlay visual tree at runtime and keep it alive across scene loads
+//  - Manage bottom-nav button bindings so they always navigate to the correct scenes
+//  - Provide helper methods to show/hide the overlay and ensure the nav stays interactive
+//
+// NOTE: This controller is referenced by the Mapbox map scripts, so it persists via DontDestroyOnLoad.
+
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1000)]
 public class MapOverlayController : MonoBehaviour
@@ -11,8 +20,20 @@ public class MapOverlayController : MonoBehaviour
     [SerializeField] private PanelSettings panelSettings;
     [SerializeField] private VisualTreeAsset overlayAsset;
 
+    [Header("Bottom Nav Button Names")]
+    [SerializeField] private string scanButtonName = "Scan_Btn";
+    [SerializeField] private string mapButtonName = "Map_Btn";
+    [SerializeField] private string historyButtonName = "History_Btn";
+    [SerializeField] private string aboutButtonName = "About_Btn";
+
     private UIDocument _doc;
     private VisualElement _overlay;  
+    
+    private ScrollView _scrollView;
+    private Button _scanButton;
+    private Button _mapButton;
+    private Button _historyButton;
+    private Button _aboutButton;
     
     
     
@@ -70,6 +91,7 @@ public class MapOverlayController : MonoBehaviour
 
     private void OnEnable()
     {
+
         if (_doc == null)
         {
             Debug.LogError("[MapOverlay] UIDocument not available on enable");
@@ -80,6 +102,8 @@ public class MapOverlayController : MonoBehaviour
         {
             _initRoutine = StartCoroutine(EnsureInitialized());
         }
+
+        Hide();
     }
 
     private void OnDisable()
@@ -128,11 +152,18 @@ public class MapOverlayController : MonoBehaviour
         }
 
         var tree = vta.CloneTree();
-        tree.name = "ScanDataOverlay";
+        tree.name = "ScanDataOverlayRoot";
         root.Add(tree);
 
         _overlay = tree.Q<VisualElement>("ScanDataOverlay") ?? tree;
+        _scrollView = _overlay.Q<ScrollView>("ScanDataScrollView");
 
+        _scanButton = root.Q<Button>(scanButtonName);
+        _mapButton = root.Q<Button>(mapButtonName);
+        _historyButton = root.Q<Button>(historyButtonName);
+        _aboutButton = root.Q<Button>(aboutButtonName);
+
+        WireNavButtons();
 
         _objectType = tree.Q<Label>("ObjectType_Label");
         _idNumber = tree.Q<Label>("idNumberModified");
@@ -165,10 +196,15 @@ public class MapOverlayController : MonoBehaviour
 
         if (_overlay != null)
         {
-            _overlay.style.display = DisplayStyle.Flex; // None
+            _overlay.style.display = DisplayStyle.None;
         }
 
-        Debug.Log("[MapOverlay] Overlay ready and visible");
+        if (_scrollView != null)
+        {
+            _scrollView.style.display = DisplayStyle.None;
+        }
+
+        Debug.Log("[MapOverlay] Overlay initialised and hidden");
     }
 
     private VisualTreeAsset ResolveOverlayAsset()
@@ -232,9 +268,94 @@ public class MapOverlayController : MonoBehaviour
 
     public void Hide()
     {
-        if (_overlay == null) return;
-        _overlay.style.display = DisplayStyle.None;
+        if (_overlay != null)
+        {
+            _overlay.style.display = DisplayStyle.None;
+        }
+
+        if (_scrollView != null)
+        {
+            _scrollView.style.display = DisplayStyle.None;
+        }
+
+        Debug.Log("[MapOverlay] Overlay hidden");
         IsOpen = false;
+    }
+
+    private void WireNavButtons()
+    {
+        UnwireNavButtons();
+
+        HookButton(_scanButton, OnScanButtonClicked, "Scan");
+        HookButton(_mapButton, OnMapButtonClicked, "Map");
+        HookButton(_historyButton, OnHistoryButtonClicked, "History");
+        HookButton(_aboutButton, OnAboutButtonClicked, "About");
+    }
+
+    private void UnwireNavButtons()
+    {
+        UnhookButton(_scanButton, OnScanButtonClicked);
+        UnhookButton(_mapButton, OnMapButtonClicked);
+        UnhookButton(_historyButton, OnHistoryButtonClicked);
+        UnhookButton(_aboutButton, OnAboutButtonClicked);
+    }
+
+    private static void HookButton(Button button, System.Action action, string label)
+    {
+        if (button == null)
+        {
+            Debug.LogWarning($"[MapOverlay] {label} button not found.");
+            return;
+        }
+
+        button.clicked += action;
+        Debug.Log($"[MapOverlay] {label} button wired.");
+    }
+
+    private static void UnhookButton(Button button, System.Action action)
+    {
+        if (button != null)
+        {
+            button.clicked -= action;
+        }
+    }
+
+    private void OnScanButtonClicked()
+    {
+        LoadScene("MainScene");
+    }
+
+    private void OnMapButtonClicked()
+    {
+        LoadScene("ZoomableMap");
+    }
+
+    private void OnHistoryButtonClicked()
+    {
+        LoadScene("HistoryLogScene");
+    }
+
+    private void OnAboutButtonClicked()
+    {
+        LoadScene("ScannedObjectInfoScene");
+    }
+
+    private void LoadScene(string sceneName)
+    {
+        if (string.IsNullOrEmpty(sceneName))
+        {
+            Debug.LogWarning("[MapOverlay] Scene name is empty.");
+            return;
+        }
+
+        Debug.Log($"[MapOverlay] Loading scene: {sceneName}");
+        SceneManager.LoadScene(sceneName);
+    }
+
+    private void HandleNavButton(string sceneName)
+    {
+        Hide();
+        LoadScene(sceneName);
     }
 }
 

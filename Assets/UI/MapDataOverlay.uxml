@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Template name="TopNavBar" src="project://database/Assets/UI/TopNavBar.uxml?fileID=9197481963319205126&amp;guid=bf8962a9d7240954ca830036fd783c7a&amp;type=3#TopNavBar" />
+    <ui:Template name="ScanDataOverlay" src="project://database/Assets/UI/ScanDataOverlay.uxml?fileID=9197481963319205126&amp;guid=795751dd3ab524f438c69ca4e09d05ed&amp;type=3#ScanDataOverlay" />
+    <ui:Template name="BottomNavBar" src="project://database/Assets/UI/BottomNavBar.uxml?fileID=9197481963319205126&amp;guid=f1cb3309b88c65d48a89886aa44abbf1&amp;type=3#BottomNavBar" />
+    <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
+    <ui:VisualElement name="SafeArea" style="flex-grow: 1; overflow: hidden; height: 3626px;">
+        <ui:Button text="&#10;" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Circle_Btn" style="background-image: url(&quot;project://database/Assets/Images/Icons/CircleIcon.png?fileID=2800000&amp;guid=1a4c368932f721747a25c7283229f3bf&amp;type=3#CircleIcon&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(188, 188, 188, 0); margin-top: 0%; margin-right: 0%; margin-bottom: 0%; margin-left: 0%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; width: 20%; height: 20%; align-items: auto; justify-content: center; align-self: center; position: absolute; bottom: 15%; top: auto; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;" />
+        <ui:VisualElement name="TopNavBarCanvas" style="flex-grow: 0; flex-basis: 12.5%;">
+            <ui:Instance template="TopNavBar" name="TopNavBar" style="flex-basis: 100%;" />
+        </ui:VisualElement>
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" name="ScanDataScrollView" tabindex="0" touch-scroll-type="Elastic" style="display: flex; visibility: visible; overflow: visible; position: relative; right: auto; bottom: auto; top: auto; opacity: 1; flex-shrink: 1; width: auto; flex-direction: column; flex-basis: auto; align-self: auto; flex-grow: 1; align-items: stretch; flex-wrap: nowrap;">
+            <ui:VisualElement name="ContentCanvas" style="flex-grow: 1; flex-basis: 100%; flex-direction: column; flex-shrink: 1; position: relative; width: auto; align-items: stretch; align-self: auto; justify-content: flex-start;">
+                <ui:Instance template="ScanDataOverlay" name="ScanDataOverlay" style="flex-grow: 1; font-size: 55px; color: rgb(255, 255, 255); display: flex; justify-content: flex-start; align-items: stretch; align-self: auto; position: relative;" />
+            </ui:VisualElement>
+        </ui:ScrollView>
+        <ui:Instance template="BottomNavBar" name="BottomNavBar" style="position: absolute; bottom: 0; left: 0; right: 0; top: auto;" />
+        <ui:VisualElement name="SafeScreenPadding" style="flex-grow: 0; align-items: auto; flex-direction: column; background-color: rgb(53, 124, 131); bottom: auto; width: auto; height: auto; flex-basis: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

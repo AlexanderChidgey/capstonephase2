@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="TopNavBar" src="project://database/Assets/UI/TopNavBar.uxml?fileID=9197481963319205126&amp;guid=bf8962a9d7240954ca830036fd783c7a&amp;type=3#TopNavBar" />
+    <ui:Template name="BottomNavBar" src="project://database/Assets/UI/BottomNavBar.uxml?fileID=9197481963319205126&amp;guid=f1cb3309b88c65d48a89886aa44abbf1&amp;type=3#BottomNavBar" />
+    <Style src="project://database/Assets/UI/Stylesheet.uss?fileID=7433441132597879392&amp;guid=2899f3ee8c02c804b844013808dc2778&amp;type=3#Stylesheet" />
+    <ui:VisualElement name="SafeArea" style="flex-grow: 1; overflow: hidden; height: 3626px;">
+        <ui:VisualElement name="TopNavBarCanvas" style="flex-grow: 0; flex-basis: 12.5%;">
+            <ui:Instance template="TopNavBar" name="TopNavBar" style="flex-basis: 100%;" />
+        </ui:VisualElement>
+        <ui:Instance template="BottomNavBar" name="BottomNavBar" style="flex-shrink: 1; min-height: auto; min-width: auto; position: absolute; height: auto; width: auto; top: auto; left: 0; bottom: 0; right: 0;" />
+        <ui:VisualElement name="SafeScreenPadding" style="flex-grow: 0; align-items: auto; flex-direction: column; background-color: rgb(53, 124, 131); bottom: auto; width: auto; height: auto; flex-basis: 0;" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -24,6 +24,8 @@
             string infoText = "";
             foreach (var prop in _props)
             {
+                Debug.Log(prop.Key);
+                Debug.Log("Please fucking work cunt");
                 infoText += $"{prop.Key}: {prop.Value}\n";
             }
 

@@ -701,7 +701,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomBarName: BottomNavBarCanvas
-  baseHeight: 250
 --- !u!114 &815926972
 MonoBehaviour:
   m_ObjectHideFlags: 0

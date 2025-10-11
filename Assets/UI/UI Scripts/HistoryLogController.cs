@@ -1,3 +1,6 @@
+// HistoryLogController.cs - populates the history UI with saved scan records and handles navigation to details scenes.
+// It relies on DBLoader (for current data) and HistoryStoreScan (for saved history entries).
+
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;

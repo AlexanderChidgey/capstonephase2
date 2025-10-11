@@ -230,7 +230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &453897477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1449,9 +1449,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1846174816}
-  - component: {fileID: 1846174815}
   - component: {fileID: 1846174818}
+  - component: {fileID: 1846174815}
   - component: {fileID: 1846174819}
+  - component: {fileID: 1846174820}
+  - component: {fileID: 1846174821}
+  - component: {fileID: 1846174822}
   m_Layer: 0
   m_Name: uiDocument
   m_TagString: Untagged
@@ -1473,7 +1476,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: dc24b3e749d83f94682b2de722cc6d75, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 5bc0c4f4bf5634075a0f8f75499f1450,
+  sourceAsset: {fileID: 9197481963319205126, guid: 7c8381fca87f24fd4807d673b995cbb8,
     type: 3}
   m_SortingOrder: 0
 --- !u!4 &1846174816
@@ -1498,14 +1501,102 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846174814}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f568de529c6141e6b30c78958f6969f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mapButtonName: Map_Btn
   scanButtonName: Scan_Btn
+  historyButtonName: History_Btn
 --- !u!114 &1846174819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846174814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2253fb082f884a8db86d4388f0e86c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelSettings: {fileID: 11400000, guid: dc24b3e749d83f94682b2de722cc6d75, type: 2}
+  overlayAsset: {fileID: 9197481963319205126, guid: 7c8381fca87f24fd4807d673b995cbb8,
+    type: 3}
+  scanButtonName: Scan_Btn
+  mapButtonName: Map_Btn
+  historyButtonName: History_Btn
+  aboutButtonName: About_Btn
+--- !u!114 &1846174820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846174814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab42856415af4e978f0afb50b3c8c13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleButtonName: Circle_Btn
+  backButtonName: Back_Btn
+  scrollViewName: ScanDataScrollView
+  resultsContainerName: DetectionResultsContainer
+  mapButtonName: Map_Btn
+  dbLoader: {fileID: 0}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
+  addressLabel: Address_Label
+  latLabel: Lat_Label
+  lonLabel: Lon_Label
+  toast: {fileID: 0}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
+  scannedObjectInfoSceneName: ScannedObjectInfoScene
+  mapObjectInfoSceneName: MapObjectInfoScene
+  historySceneName: HistoryLogScene
+  mapSceneName: ZoomableMap
+--- !u!114 &1846174821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846174814}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af44befd8948401381a0d375bd4ade0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  circleButtonName: Circle_Btn
+  backButtonName: Back_Btn
+  scrollViewName: ScanDataScrollView
+  resultsContainerName: DetectionResultsContainer
+  mapButtonName: Map_Btn
+  dbLoader: {fileID: 0}
+  overlayRootName: ScanDataOverlay
+  serialNumberLabel: SerialNumber_Label
+  modelNumberLabel: ModelNumber_Label
+  numberOfPhasesLabel: NumberOfPhases_Label
+  voltageLabel: Voltage_Label
+  lastServiceDateLabel: LastServiceDate_Label
+  nextServiceDateLabel: NextServiceDate_Label
+  addressLabel: Address_Label
+  latLabel: Lat_Label
+  lonLabel: Lon_Label
+  toast: {fileID: 0}
+  exportButtonName: ExportAsCSV_Btn
+  copyAllButtonName: CopyAllData_Btn
+  scannedObjectInfoSceneName: ScannedObjectInfoScene
+  historySceneName: HistoryLogScene
+--- !u!114 &1846174822
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1514,12 +1605,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1846174814}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2253fb082f884a8db86d4388f0e86c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a72dc39cdbc7ea41a9e2a6a32f89325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelSettings: {fileID: 11400000, guid: dc24b3e749d83f94682b2de722cc6d75, type: 2}
-  overlayAsset: {fileID: 9197481963319205126, guid: c543be5db7fbb41a6baeca07c8431290,
-    type: 3}
+  bottomBarName: BottomNavBarCanvas
 --- !u!1 &2127070206
 GameObject:
   m_ObjectHideFlags: 0

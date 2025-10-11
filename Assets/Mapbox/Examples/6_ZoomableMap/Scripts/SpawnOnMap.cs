@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿// InteractiveMap.cs - spawns Mapbox markers for each substation and routes user taps to the detailed scene.
+// Responsibilities:
+//  - Wait for the Map to initialise and DBLoader to finish loading records
+//  - Instantiate marker prefabs on the map for each substation
+//  - When the user clicks/taps a marker, store the selected SYSTEM_ID and load MapObjectInfoScene
+
+using UnityEngine;
 using UnityEngine.UIElements;
 using Mapbox.Unity.Map;
 using Mapbox.Utils;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+
 
 public class InteractiveMap : MonoBehaviour
 {
@@ -42,10 +50,10 @@ public class InteractiveMap : MonoBehaviour
     {
         // Wait for controller singleton
         if (MapOverlayController.Instance == null)
-    {
-        var go = new GameObject("OverlayControllerRuntime");
-        go.AddComponent<MapOverlayController>(); // this will load the UXML at runtime
-    }
+        {
+            var go = new GameObject("OverlayControllerRuntime");
+            go.AddComponent<MapOverlayController>(); // this will load the UXML at runtime
+        }
 
 
         // Wait for data
@@ -81,12 +89,6 @@ public class InteractiveMap : MonoBehaviour
     {
         UpdateMarkerPositions();
 
-        var overlay = MapOverlayController.Instance;
-        if (overlay != null && overlay.IsOpen)
-        {
-            return;
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -120,31 +122,13 @@ public class InteractiveMap : MonoBehaviour
 
     private void ShowMarkerInfo(MarkerData data)
     {
-        var c = MapOverlayController.Instance;
-        if (c == null)
-        {
-            Debug.LogWarning("[SpawnOnMap] No MapOverlayController in scene.");
-            return;
-        }
-
         // un-highlight previous
-        if (_lastClickedMarker?.Renderer != null)
-            _lastClickedMarker.Renderer.material.color = _lastClickedMarker.OriginalColor;
-
-        // highlight current
-        if (data.Renderer != null) data.Renderer.material.color = Color.red;
-        _lastClickedMarker = data;
-
         var s = data.Substation;
-        string info =
-            $"System ID: {s.SYSTEM_ID}\n" +
-            $"User Ref: {s.USER_REF_I}\n" +
-            $"Site: {s.SITE_DESC}\n" +
-            $"Type: {s.TR_TYPE}, KVA: {s.MAX_KVA}, Volt: {s.MAX_VOLT}\n" +
-            $"Location: ({s.LAT}, {s.LON})\n" +
-            $"Updated: {s.REFRESH_DT}";
+        StoreSelectedScan.Id = s?.SYSTEM_ID;
+        StoreSelectedScan.Utc = System.DateTime.UtcNow;
+        StoreSelectedScan.ShowOverlayNextScene = true;
 
-        c.Show(s);
+        SceneManager.LoadScene("MapObjectInfoScene");
     }
 }
 

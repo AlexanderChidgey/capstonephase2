@@ -1,3 +1,5 @@
+// HistoryStoreScan.cs - simple static store for persisting scan history entries and the "show overlay" flag across scenes.
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
